@@ -18,6 +18,11 @@ class Content extends Model
         'trailer_url',
     ];
 
+    protected $casts = [
+        'release_date' => 'datetime',
+    ];
+    
+
     public function genres()
     {
         return $this->belongsToMany(Genre::class, 'content_genre', 'content_id', 'genre_id');
