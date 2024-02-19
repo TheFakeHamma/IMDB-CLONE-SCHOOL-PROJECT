@@ -11,10 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('content_genre', function (Blueprint $table) {
-            $table->foreignId('content_id')->constrained()->onDelete('cascade');
-            $table->foreignId('genre_id')->constrained()->onDelete('cascade');
-            $table->primary(['content_id', 'genre_id']);
+        Schema::create('genres', function (Blueprint $table) {
+            $table->id();
+            $table->string('name', 255)->unique();
         });
     }
 
@@ -23,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('content_genre');
+        Schema::dropIfExists('genres');
     }
 };

@@ -9,10 +9,8 @@ class Person extends Model
 {
     use HasFactory;
 
-    protected $primaryKey = 'person_id';
-
     protected $fillable = [
-        'name',
+        'username',
         'bio',
         'photo_url',
     ];

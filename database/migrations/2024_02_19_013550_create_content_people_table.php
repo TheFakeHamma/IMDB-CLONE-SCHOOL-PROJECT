@@ -11,12 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
+        Schema::disableForeignKeyConstraints();
+
         Schema::create('content_people', function (Blueprint $table) {
             $table->foreignId('content_id')->constrained()->onDelete('cascade');
             $table->foreignId('person_id')->constrained()->onDelete('cascade');
             $table->enum('role', ['actor', 'director']);
             $table->primary(['content_id', 'person_id', 'role']);
-        });
+        });        
+
+        Schema::enableForeignKeyConstraints();
     }
 
     /**

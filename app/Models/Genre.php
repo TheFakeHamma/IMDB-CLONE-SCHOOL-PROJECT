@@ -7,9 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Genre extends Model
 {
-    use HasFactory;
+    public $timestamps = false;
 
-    protected $primaryKey = 'genre_id';
+    use HasFactory;
 
     protected $fillable = [
         'name',

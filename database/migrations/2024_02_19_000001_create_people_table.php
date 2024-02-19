@@ -11,11 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('genres', function (Blueprint $table) {
-            $table->id('genre_id');
-            $table->string('name')->unique();
+        Schema::disableForeignKeyConstraints();
+
+        Schema::create('people', function (Blueprint $table) {
+            $table->id();
+            $table->string('name', 255);
+            $table->text('bio')->nullable();
+            $table->string('photo_url', 255)->nullable();
             $table->timestamps();
         });
+
+        Schema::enableForeignKeyConstraints();
     }
 
     /**
@@ -23,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('genres');
+        Schema::dropIfExists('people');
     }
 };
