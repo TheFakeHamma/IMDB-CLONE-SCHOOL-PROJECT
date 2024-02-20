@@ -9,8 +9,8 @@ class MovieController extends Controller
 {
     public function index()
     {
-        $contents = Content::all();
         $movies = Content::where('type', 'movie')->take(8)->get();
-        return view('index', compact('contents', 'movies'));
+        $latestMovie = Content::where('type', 'movie')->latest('release_date')->first(); // Fetch the latest movie
+        return view('index', compact('movies', 'latestMovie'));
     }
 }
