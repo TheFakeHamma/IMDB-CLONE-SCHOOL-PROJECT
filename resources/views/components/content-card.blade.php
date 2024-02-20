@@ -1,10 +1,16 @@
-<div class="card" style="width: 18rem;">
-    @if($photoUrl)
-        <img src="{{ $photoUrl }}" class="card-img-top" alt="{{ $title }}">
-    @endif
-    <div class="card-body">
-        <h5 class="card-title">{{ $title }}</h5>
-        <p class="card-text">{{ $releaseDate->format('Y') }}</p>
-        <a href="#" class="btn btn-primary">More Details</a>
+<div class="col">
+    <div class="card h-100" style="width: 15rem;">
+        @if ($photoUrl)
+            <img src="{{ $photoUrl }}" class="card-img-top" alt="{{ $title }}">
+        @endif
+        <div class="card-body d-flex flex-column justify-content-between">
+            <div>
+                <h5 class="card-title">{{ $title }}</h5>
+                <footer class="blockquote-footer mt-2">Release date {{$releaseDate->format('Y')}}</footer>
+            </div>
+            <div>
+                <a href="#" class="btn btn-primary mt-2">More Details</a>
+            </div>
+        </div>
     </div>
 </div>
