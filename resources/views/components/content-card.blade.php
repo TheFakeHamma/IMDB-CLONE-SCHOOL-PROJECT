@@ -9,7 +9,7 @@
                 <footer class="blockquote-footer mt-2">Release date {{$releaseDate->format('Y')}}</footer>
             </div>
             <div>
-                <a href="#" class="btn btn-primary mt-2">More Details</a>
+                <a href="#" class="btn btn-danger mt-2">More Details</a>
             </div>
         </div>
     </div>

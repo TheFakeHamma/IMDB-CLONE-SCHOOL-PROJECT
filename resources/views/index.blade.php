@@ -24,11 +24,11 @@
                     </div>
                 </div>
                 <div class="lc-block mb-2">
-                    <a class="btn btn-primary" style="width: 100px;" href="#" role="button">GENRE</a>
-                    <a class="btn btn-primary ms-5" style="width: 100px;" href="#" role="button">GENRE</a>
-                    <a class="btn btn-primary ms-5" style="width: 100px;" href="#" role="button">GENRE</a>
-                    <a class="btn btn-primary ms-5" style="width: 100px;" href="#" role="button">GENRE</a>
-                    <a class="btn btn-primary ms-5" style="width: 100px;" href="#" role="button">GENRE</a>
+                    <a class="btn btn-danger" style="width: 100px;" href="#" role="button">GENRE</a>
+                    <a class="btn btn-danger ms-5" style="width: 100px;" href="#" role="button">GENRE</a>
+                    <a class="btn btn-danger ms-5" style="width: 100px;" href="#" role="button">GENRE</a>
+                    <a class="btn btn-danger ms-5" style="width: 100px;" href="#" role="button">GENRE</a>
+                    <a class="btn btn-danger ms-5" style="width: 100px;" href="#" role="button">GENRE</a>
                 </div>
             </div>
         </div>
@@ -40,7 +40,7 @@
                 @endforeach
             </div>
             <div class="d-flex justify-content-center mt-2">
-                <a href="#" class="btn btn-primary" style="width: 100px;">View All</a>
+                <a href="#" class="btn btn-danger" style="width: 100px;">View All</a>
             </div>
         </div>
         <div class="container mt-5 mb-5">

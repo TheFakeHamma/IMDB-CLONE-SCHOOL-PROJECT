@@ -16,7 +16,7 @@
                 </div>
             </div>
 
-            <div class="lc-block d-grid gap-2 d-md-flex justify-content-md-start"><a class="btn btn-primary px-4 me-md-2"
+            <div class="lc-block d-grid gap-2 d-md-flex justify-content-md-start"><a class="btn btn-danger px-4 me-md-2"
                     href="#" role="button">Go to movie</a>
             </div>
         </div>
