@@ -19,7 +19,8 @@
                 </div>
                 <div class="lc-block mb-5">
                     <div editable="rich">
-                        <p class="lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore</p>
+                        <p class="lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                            incididunt ut labore</p>
                     </div>
                 </div>
                 <div class="lc-block mb-2">
@@ -29,6 +30,17 @@
                     <a class="btn btn-primary ms-5" style="width: 100px;" href="#" role="button">GENRE</a>
                     <a class="btn btn-primary ms-5" style="width: 100px;" href="#" role="button">GENRE</a>
                 </div>
+            </div>
+        </div>
+        <div class="container mt-5 mb-5">
+            <h1>All Movies</h1>
+            <div class="row row-cols-5">
+                @foreach ($movies->shuffle()->take(10) as $movie)
+                    <x-content-card :title="$movie->title" :photo-url="$movie->photo_url" :release-date="$movie->release_date" />
+                @endforeach
+            </div>
+            <div class="d-flex justify-content-center mt-2">
+                <a href="#" class="btn btn-primary" style="width: 100px;">View All</a>
             </div>
         </div>
     </div>

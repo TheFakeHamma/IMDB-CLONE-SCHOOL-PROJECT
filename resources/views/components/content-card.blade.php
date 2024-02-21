@@ -1,4 +1,4 @@
-<div class="col">
+<div class="col mb-4">
     <div class="card h-100" style="width: 15rem;">
         @if ($photoUrl)
             <img src="{{ $photoUrl }}" class="card-img-top" alt="{{ $title }}">
