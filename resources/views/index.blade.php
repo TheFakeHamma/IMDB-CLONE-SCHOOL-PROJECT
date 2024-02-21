@@ -43,5 +43,16 @@
                 <a href="#" class="btn btn-primary" style="width: 100px;">View All</a>
             </div>
         </div>
+        <div class="container mt-5 mb-5">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h1 class="card-title">Want to be a part of us?</h1>
+                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                    <div class="mt-4">
+                        <a href="#" class="btn btn-danger btn-lg">Sign Up</a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection
