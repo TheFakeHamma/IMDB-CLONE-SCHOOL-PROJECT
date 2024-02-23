@@ -10,11 +10,19 @@ class MovieController extends Controller
 {
     public function index()
     {
-        $movies = Content::where('type', 'movie')->get(); // Fetch all movies
-        $latestMovie = Content::where('type', 'movie')->latest('release_date')->first(); // Fetch the latest movie
+        $movies = Content::where('type', 'movie')->get();
+        $movies->each(function ($movie) {
+            $movie->averageRating = $movie->reviews->avg('rating') ?? 'No reviews';
+        });
+
+        $latestMovie = Content::where('type', 'movie')->latest('release_date')->first();
+        if ($latestMovie) {
+            $latestMovie->averageRating = $latestMovie->reviews->avg('rating') ?? 'No reviews';
+        }
 
         return view('index', compact('movies', 'latestMovie'));
     }
+
 
     public function contents(Request $request)
     {
@@ -60,14 +68,15 @@ class MovieController extends Controller
                           $query->where('name', 'LIKE', "%{$search}%");
                       });
 
-           // Check if the search term is a year
-           if (is_numeric($search)) {
-              $query->orWhereYear('release_date', '=', $search);
-            }
-    });
-}
+                // Check if the search term is a year
+                if (is_numeric($search)) {
+                  $query->orWhereYear('release_date', '=', $search);
+                }
+            });
+        }
 
-        $contents = $query->paginate(12);
+        $contents = $query->with('reviews')->paginate(12);
+
         $genres = Genre::all();
         $types = Content::select('type')->distinct()->get();
 

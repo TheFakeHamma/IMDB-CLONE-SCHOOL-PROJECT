@@ -6,7 +6,18 @@
         <div class="card-body d-flex flex-column justify-content-between">
             <div>
                 <h5 class="card-title">{{ $title }}</h5>
-                <footer class="blockquote-footer mt-2">Release date {{$releaseDate->format('Y')}}</footer>
+                <footer class="blockquote-footer mt-2">Release date {{ $releaseDate->format('Y') }}</footer>
+                @if ($averageRating)
+                    <div class="rating">
+                        @for ($i = 0; $i < 5; $i++)
+                            @if (is_numeric($averageRating) && $i < round($averageRating))
+                                <i class="fas fa-star" style="color: gold;"></i>
+                            @else
+                                <i class="far fa-star" style="color: gold;"></i>
+                            @endif
+                        @endfor
+                    </div>
+                @endif
             </div>
             <div>
                 <a href="#" class="btn btn-danger mt-2">More Details</a>

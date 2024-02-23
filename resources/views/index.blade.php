@@ -8,7 +8,7 @@
             <h1>Top 5 Movies</h1>
             <div class="row row-cols-5">
                 @foreach ($movies->take(5) as $movie)
-                    <x-content-card :title="$movie->title" :photo-url="$movie->photo_url" :release-date="$movie->release_date" />
+                    <x-content-card :title="$movie->title" :photo-url="$movie->photo_url" :release-date="$movie->release_date" :average-rating="$movie->averageRating" />
                 @endforeach
             </div>
         </div>
@@ -38,7 +38,7 @@
             <h1>All Movies</h1>
             <div class="row row-cols-4">
                 @foreach ($movies->shuffle()->take(8) as $movie)
-                    <x-content-card :title="$movie->title" :photo-url="$movie->photo_url" :release-date="$movie->release_date" class="h-100" />
+                    <x-content-card :title="$movie->title" :photo-url="$movie->photo_url" :release-date="$movie->release_date" :average-rating="$movie->averageRating" class="h-100" />
                 @endforeach
             </div>
             <div class="d-flex justify-content-center mt-2">

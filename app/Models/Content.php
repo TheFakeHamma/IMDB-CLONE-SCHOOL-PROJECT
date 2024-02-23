@@ -34,4 +34,18 @@ class Content extends Model
                     ->withPivot('role');
     }
 
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
+
+    protected $appends = ['averageRating'];
+
+    public function getAverageRatingAttribute()
+    {
+        $ratings = $this->reviews->pluck('rating');
+        return $ratings->isNotEmpty() ? round($ratings->avg(), 2) : 'No reviews';
+    }
+
+
 }

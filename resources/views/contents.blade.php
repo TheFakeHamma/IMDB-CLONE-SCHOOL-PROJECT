@@ -4,13 +4,13 @@
         @php
             $heading = 'All Content'; // Default heading
 
-            if(request()->has('search')) {
+            if (request()->has('search')) {
                 $heading = 'Search results for "' . request('search') . '"';
-            } elseif(request()->has('genre')) {
+            } elseif (request()->has('genre')) {
                 $heading = 'Filtered';
-            } elseif(request('type') == 'movie') {
+            } elseif (request('type') == 'movie') {
                 $heading = 'Show all movies';
-            } elseif(request('type') == 'tv_show') {
+            } elseif (request('type') == 'tv_show') {
                 $heading = 'Show all TV shows';
             }
         @endphp
@@ -38,7 +38,8 @@
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="type" value="{{ $type->type }}"
                             id="type_{{ $type->type }}" {{ request('type') == $type->type ? 'checked' : '' }}>
-                        <label class="form-check-label" for="type_{{ $type->type }}">{{ ucfirst(str_replace('_', ' ',$type->type)) }}</label>
+                        <label class="form-check-label"
+                            for="type_{{ $type->type }}">{{ ucfirst(str_replace('_', ' ', $type->type)) }}</label>
                     </div>
                 @endforeach
 
@@ -68,7 +69,7 @@
 
         <div class="row row-cols-4 mt-5">
             @foreach ($contents as $content)
-                <x-content-card :title="$content->title" :photo-url="$content->photo_url" :release-date="$content->release_date" class="h-100" />
+                <x-content-card :title="$content->title" :photo-url="$content->photo_url" :release-date="$content->release_date" :average-rating="$content->averageRating" class="h-100" />
             @endforeach
         </div>
         <div class="mt-4 d-flex justify-content-center">
