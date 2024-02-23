@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
     <div class="container">
-        <h1>All movies & shows</h1>
+        <h1>All content</h1>
         <form action="{{ route('contents') }}" method="GET">
             <div class="form-group">
                 <h6>Genre</h6>

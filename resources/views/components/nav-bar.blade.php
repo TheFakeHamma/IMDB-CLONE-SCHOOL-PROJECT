@@ -33,12 +33,12 @@
                             Movies & Shows
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Movies</a></li>
-                            <li><a class="dropdown-item" href="#">Shows</a></li>
+                            <li><a class="dropdown-item" href="{{ route('contents') }}?type=movie">Movies</a></li>
+                            <li><a class="dropdown-item" href="{{ route('contents') }}?type=tv_show">TV Shows</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a class="dropdown-item" href="{{route('contents')}}">Show all</a></li>
+                            <li><a class="dropdown-item" href="{{ route('contents') }}">Show all</a></li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
@@ -47,12 +47,16 @@
                             Genres
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">Comedy</a></li>
+                            @foreach ($genres as $genre)
+                                <li class="nav-item">
+                                    <a class="dropdown-item"
+                                        href="{{ route('contents') }}?genre[]={{ $genre->name }}">{{ $genre->name }}</a>
+                                </li>
+                            @endforeach
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            <li><a class="dropdown-item" href="#">All Genres</a></li>
                         </ul>
                     </li>
                 </ul>
