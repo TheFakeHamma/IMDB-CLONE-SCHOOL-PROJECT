@@ -29,7 +29,7 @@ class MovieController extends Controller
             $heading = 'Filtered';
         } elseif ($request->has('type')) {
             $type = $request->input('type');
-            $typeFormatted = ucfirst(str_replace('_', ' ', $type)); // Replace underscores with spaces and capitalize
+            $typeFormatted = ucfirst(str_replace('_', ' ', $type));
             $heading = "Show all $typeFormatted";
         }
 
@@ -59,8 +59,13 @@ class MovieController extends Controller
                       ->orWhereHas('genres', function($query) use ($search) {
                           $query->where('name', 'LIKE', "%{$search}%");
                       });
-            });
-        }
+
+           // Check if the search term is a year
+           if (is_numeric($search)) {
+              $query->orWhereYear('release_date', '=', $search);
+            }
+    });
+}
 
         $contents = $query->paginate(12);
         $genres = Genre::all();
