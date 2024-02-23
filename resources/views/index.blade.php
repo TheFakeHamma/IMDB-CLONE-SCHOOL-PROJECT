@@ -2,7 +2,7 @@
 @section('content')
     <div class="container">
         <x-hero-movie :title="$latestMovie->title" :release-date="$latestMovie->release_date" :synopsis="$latestMovie->synopsis">
-            <img class="rounded-start w-100" src="{{ $content->photo_url }}" alt="Madame Web poster"
+            <img class="rounded-start w-100" src="{{ $latestMovie->photo_url }}" alt="{{ $latestMovie->title }}"
                 width="720"></x-hero-movie>
         <div class="container mt-5 mb-5">
             <h1>Top 5 Movies</h1>

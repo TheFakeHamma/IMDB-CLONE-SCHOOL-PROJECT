@@ -8,12 +8,12 @@
         </div>
         <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
           <h6 class="text-uppercase fw-bold mb-4">
-            <a class="nav-link" aria-current="page" href="#">Home</a>
+            <a class="nav-link" aria-current="page" href="{{ route('index') }}">Home</a>
           </h6>
         </div>
         <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
           <h6 class="text-uppercase fw-bold mb-4">
-            <a class="nav-link" aria-current="page" href="#">Movies & Shows</a>
+            <a class="nav-link" aria-current="page" href="{{ route('contents') }}">Movies & Shows</a>
           </h6>
         </div>
         <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
