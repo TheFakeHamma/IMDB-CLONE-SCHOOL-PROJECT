@@ -32,4 +32,6 @@ Route::get('/contents', [MovieController::class, 'contents'])->name('contents');
 
 Route::get('/content/{id}', [ContentPage::class, 'show'])->name('content.show');
 
-Route::get('/user/{username}', [UserController::class, 'show'])->name('user.profile');
+Route::get('/user/{username}', [UserController::class, 'show'])
+     ->name('user.profile')
+     ->middleware('checkprofileowner');
