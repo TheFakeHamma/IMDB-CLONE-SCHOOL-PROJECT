@@ -1,7 +1,9 @@
 @extends('layouts.app')
 @section('content')
     <div class="container">
-        <x-hero-movie :title="$latestMovie->title" :photo-url="$latestMovie->photo_url" :release-date="$latestMovie->release_date" :synopsis="$latestMovie->synopsis" />
+        <x-hero-movie :title="$latestMovie->title" :release-date="$latestMovie->release_date" :synopsis="$latestMovie->synopsis">
+            <img class="rounded-start w-100" src="{{ $content->photo_url }}" alt="Madame Web poster"
+                width="720"></x-hero-movie>
         <div class="container mt-5 mb-5">
             <h1>Top 5 Movies</h1>
             <div class="row row-cols-5">
@@ -36,7 +38,7 @@
             <h1>All Movies</h1>
             <div class="row row-cols-4">
                 @foreach ($movies->shuffle()->take(8) as $movie)
-                    <x-content-card :title="$movie->title" :photo-url="$movie->photo_url" :release-date="$movie->release_date" class="h-100"/>
+                    <x-content-card :title="$movie->title" :photo-url="$movie->photo_url" :release-date="$movie->release_date" class="h-100" />
                 @endforeach
             </div>
             <div class="d-flex justify-content-center mt-2">

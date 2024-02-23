@@ -15,9 +15,14 @@ class Person extends Model
         'photo_url',
     ];
 
+    protected $casts = [
+        'role' => 'string',
+    ];
+
     public function contents() 
     {
         return $this->belongsToMany(Content::class, 'content_people')
                     ->withPivot('role');
     }
 }
+
