@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\ContentPage;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,3 +32,4 @@ Route::get('/contents', [MovieController::class, 'contents'])->name('contents');
 
 Route::get('/content/{id}', [ContentPage::class, 'show'])->name('content.show');
 
+Route::get('/user/{username}', [UserController::class, 'show'])->name('user.profile');
