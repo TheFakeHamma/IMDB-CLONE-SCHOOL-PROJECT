@@ -9,7 +9,9 @@
                 <p class="card-text">
                     {{ strlen($bio) > 100 ? substr($bio, 0, 100) . '...' : $bio }}
                 </p>
-                <footer class="blockquote-footer mt-2">Role - {{ $role }}</footer>
+                @if (isset($role))
+                    <footer class="blockquote-footer mt-2">Role - {{ $role }}</footer>
+                @endif
             </div>
             <div>
                 <a href="#" class="btn btn-danger mt-2">More Details</a>

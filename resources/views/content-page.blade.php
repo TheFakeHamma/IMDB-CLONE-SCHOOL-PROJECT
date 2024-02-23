@@ -15,8 +15,7 @@
                     <h3>Cast</h3>
                     <div class="row">
                         @foreach ($content->people as $person)
-                            {{-- Fix broken thing --}}
-                            {{-- <x-people-card :name="$person->name" :photo-url="$person->photo_url" :bio="$person->bio" :role="$person->role"/> --}}
+                            <x-people-card :name="$person->name" :photo-url="$person->photo_url" :bio="$person->bio" :role="$person->pivot->role" />
                         @endforeach
                     </div>
                 </div>

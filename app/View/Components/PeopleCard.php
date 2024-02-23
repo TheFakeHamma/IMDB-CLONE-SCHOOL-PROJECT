@@ -13,14 +13,13 @@ class PeopleCard extends Component
     public $bio;
     public $role;
 
-    public function __construct($name, $photoUrl, $bio, $role)
+    public function __construct($name, $photoUrl, $bio, $role = null)
     {
         $this->name = $name;
         $this->photoUrl = $photoUrl;
         $this->bio = $bio;
         $this->role = $role;
     }
-
     /**
      * Get the view / contents that represent the component.
      */

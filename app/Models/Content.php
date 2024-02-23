@@ -31,6 +31,7 @@ class Content extends Model
     public function people()
     {
         return $this->belongsToMany(Person::class, 'content_people')
-                ->withPivot('role');
+                    ->withPivot('role');
     }
+
 }
