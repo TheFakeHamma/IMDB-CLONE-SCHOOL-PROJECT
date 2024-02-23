@@ -38,6 +38,17 @@ class MovieController extends Controller
             $query->where('release_date', '<=', $request->release_date_to);
         }
 
+        // Search filter
+        if ($request->has('search')) {
+            $search = $request->search;
+            $query->where(function($query) use ($search) {
+                $query->where('title', 'LIKE', "%{$search}%")
+                      ->orWhereHas('genres', function($query) use ($search) {
+                          $query->where('name', 'LIKE', "%{$search}%");
+                      });
+            });
+        }
+
         $contents = $query->paginate(12);
         $genres = Genre::all();
         $types = Content::select('type')->distinct()->get();

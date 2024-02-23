@@ -16,9 +16,9 @@
             <!-- Search bar and navigation -->
             <div class="d-flex w-100">
                 <!-- Search form -->
-                <form class="flex-fill me-3" role="search">
+                <form class="flex-fill me-3" role="search" action="{{ route('contents') }}" method="GET">
                     <div class="input-group">
-                        <input class="form-control" type="search" placeholder="Search" aria-label="Search">
+                        <input class="form-control" type="search" placeholder="Search" aria-label="Search" name="search">
                         <button class="btn btn-outline-success ms-2" type="submit">Search</button>
                     </div>
                 </form>
