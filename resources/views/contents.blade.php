@@ -47,7 +47,7 @@
             <div class="mt-3">
                 <button type="submit" class="btn btn-primary">Filter</button>
                 @if (request()->except('page'))
-                    <a href="{{ route('contents') }}" class="btn btn-danger">Reset Filters</a>
+                    <a href="{{ route('contents') }}" class="btn btn-danger">Reset</a>
                 @endif
             </div>
         </form>
