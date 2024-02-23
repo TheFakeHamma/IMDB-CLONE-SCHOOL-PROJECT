@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Content;
 use Illuminate\Http\Request;
+use App\Models\Genre;
 
 class MovieController extends Controller
 {
@@ -15,11 +16,32 @@ class MovieController extends Controller
         return view('index', compact('movies', 'latestMovie'));
     }
 
-    public function contents()
+    public function contents(Request $request)
     {
-        // Fetch paginated contents, 10 per page as an example
-        $contents = Content::paginate(10);
+        $query = Content::query();
 
-        return view('contents', compact('contents'));
+        if ($request->has('genre') && $request->genre != '') {
+            $query->whereHas('genres', function ($q) use ($request) {
+                $q->where('name', $request->genre);
+            });
+        }
+
+        if ($request->has('type') && $request->type != '') {
+            $query->where('type', $request->type);
+        }
+
+        // Filter by release date range
+        if ($request->has('release_date_from') && $request->release_date_from != '') {
+            $query->where('release_date', '>=', $request->release_date_from);
+        }
+        if ($request->has('release_date_to') && $request->release_date_to != '') {
+            $query->where('release_date', '<=', $request->release_date_to);
+        }
+
+        $contents = $query->paginate(10);
+        $genres = Genre::all();
+        $types = Content::select('type')->distinct()->get();
+
+        return view('contents', compact('contents', 'genres', 'types'));
     }
 }
