@@ -20,9 +20,9 @@ class MovieController extends Controller
     {
         $query = Content::query();
 
-        if ($request->has('genre') && $request->genre != '') {
+        if ($request->filled('genre')) {
             $query->whereHas('genres', function ($q) use ($request) {
-                $q->where('name', $request->genre);
+                $q->whereIn('name', $request->genre);
             });
         }
 
@@ -38,7 +38,7 @@ class MovieController extends Controller
             $query->where('release_date', '<=', $request->release_date_to);
         }
 
-        $contents = $query->paginate(10);
+        $contents = $query->paginate(12);
         $genres = Genre::all();
         $types = Content::select('type')->distinct()->get();
 
