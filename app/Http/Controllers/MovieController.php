@@ -20,6 +20,19 @@ class MovieController extends Controller
     {
         $query = Content::query();
 
+        $heading = 'All Content';
+
+        // Adjust the heading based on the request parameters
+        if ($request->filled('search')) {
+            $heading = 'Search results for "' . $request->search . '"';
+        } elseif ($request->filled('genre')) {
+            $heading = 'Filtered';
+        } elseif ($request->has('type')) {
+            $type = $request->input('type');
+            $typeFormatted = ucfirst(str_replace('_', ' ', $type)); // Replace underscores with spaces and capitalize
+            $heading = "Show all $typeFormatted";
+        }
+
         if ($request->filled('genre')) {
             $query->whereHas('genres', function ($q) use ($request) {
                 $q->whereIn('name', $request->genre);

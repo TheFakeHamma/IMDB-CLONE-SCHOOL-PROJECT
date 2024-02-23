@@ -1,7 +1,21 @@
 @extends('layouts.app')
 @section('content')
     <div class="container">
-        <h1>All content</h1>
+        @php
+            $heading = 'All Content'; // Default heading
+
+            if(request()->has('search')) {
+                $heading = 'Search results for "' . request('search') . '"';
+            } elseif(request()->has('genre')) {
+                $heading = 'Filtered';
+            } elseif(request('type') == 'movie') {
+                $heading = 'Show all movies';
+            } elseif(request('type') == 'tv_show') {
+                $heading = 'Show all TV shows';
+            }
+        @endphp
+
+        <h1>{{ $heading }}</h1>
         <form action="{{ route('contents') }}" method="GET">
             <div class="form-group">
                 <h6>Genre</h6>
@@ -24,7 +38,7 @@
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="type" value="{{ $type->type }}"
                             id="type_{{ $type->type }}" {{ request('type') == $type->type ? 'checked' : '' }}>
-                        <label class="form-check-label" for="type_{{ $type->type }}">{{ ucfirst($type->type) }}</label>
+                        <label class="form-check-label" for="type_{{ $type->type }}">{{ ucfirst(str_replace('_', ' ',$type->type)) }}</label>
                     </div>
                 @endforeach
 
