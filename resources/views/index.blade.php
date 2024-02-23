@@ -34,9 +34,9 @@
         </div>
         <div class="container mt-5 mb-5">
             <h1>All Movies</h1>
-            <div class="row row-cols-5">
-                @foreach ($movies->shuffle()->take(10) as $movie)
-                    <x-content-card :title="$movie->title" :photo-url="$movie->photo_url" :release-date="$movie->release_date" />
+            <div class="row row-cols-4">
+                @foreach ($movies->shuffle()->take(8) as $movie)
+                    <x-content-card :title="$movie->title" :photo-url="$movie->photo_url" :release-date="$movie->release_date" class="h-100"/>
                 @endforeach
             </div>
             <div class="d-flex justify-content-center mt-2">

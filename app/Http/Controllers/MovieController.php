@@ -14,4 +14,12 @@ class MovieController extends Controller
 
         return view('index', compact('movies', 'latestMovie'));
     }
+
+    public function contents()
+    {
+        // Fetch paginated contents, 10 per page as an example
+        $contents = Content::paginate(10);
+
+        return view('contents', compact('contents'));
+    }
 }
