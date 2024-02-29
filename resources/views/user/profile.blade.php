@@ -4,6 +4,13 @@
     <div class="container">
         <h1>{{ $user->username }}'s Profile</h1>
         <p>Email: {{ $user->email }}</p>
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            User Settings
+        </button>
+
+        <x-settings-modal :user="$user" />
+
 
         <h3>User Reviews</h3>
         <div class="row">

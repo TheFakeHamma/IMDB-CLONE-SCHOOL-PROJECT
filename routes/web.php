@@ -35,3 +35,9 @@ Route::get('/content/{id}', [ContentPage::class, 'show'])->name('content.show');
 Route::get('/user/{username}', [UserController::class, 'show'])
      ->name('user.profile')
      ->middleware('checkprofileowner');
+
+Route::put('/user/{username}/password', [UserController::class, 'updatePassword'])
+     ->name('user.password.update')->middleware(['auth', 'can:update,user']);
+
+Route::delete('/user/{username}', [UserController::class, 'destroy'])
+     ->name('user.delete')->middleware(['auth', 'can:delete,user']);
