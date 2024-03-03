@@ -12,13 +12,15 @@ class HeroMovie extends Component
     public $photoUrl;
     public $releaseDate;
     public $synopsis;
+    public $id;
 
-    public function __construct($title, $releaseDate, $synopsis)
+    public function __construct($title, $releaseDate, $synopsis, $id)
     {
         $this->title = $title;
         // $this->photoUrl = $photoUrl;
         $this->releaseDate = $releaseDate;
         $this->synopsis = $synopsis;
+        $this->id = $id;
     }
 
     /**

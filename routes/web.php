@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ReviewController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\MovieController;
@@ -37,7 +38,10 @@ Route::get('/user/{username}', [UserController::class, 'show'])
      ->middleware('checkprofileowner');
 
 Route::put('/user/{username}/password', [UserController::class, 'updatePassword'])
-     ->name('user.password.update')->middleware(['auth', 'can:update,user']);
+     ->name('user.password.update');
 
 Route::delete('/user/{username}', [UserController::class, 'destroy'])
      ->name('user.delete')->middleware(['auth', 'can:delete,user']);
+
+Route::post('/reviews', [ReviewController::class, 'store'])->name('reviews.store')->middleware('auth');
+Route::delete('/reviews/{review}', [ReviewController::class, 'destroy'])->name('reviews.destroy')->middleware('auth');

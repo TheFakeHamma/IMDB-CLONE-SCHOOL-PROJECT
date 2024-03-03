@@ -5,11 +5,14 @@
         <h1>{{ $user->username }}'s Profile</h1>
         <p>Email: {{ $user->email }}</p>
         <!-- Button trigger modal -->
-        <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal">
-            User Settings
-        </button>
+        @if (Auth::check() && Auth::user()->id == $user->id)
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                User Settings
+            </button>
 
-        <x-settings-modal :user="$user" />
+            <x-settings-modal :user="$user" />
+        @endif
 
 
         <h3>User Reviews</h3>
@@ -34,6 +37,13 @@
                             {{-- Link to the movie --}}
                             <a href="/content/{{ $review->content->id }}" class="btn btn-primary">Go to
                                 {{ str_replace('_', ' ', $review->content->type) }}</a>
+                            @if (Auth::check() && Auth::user()->id == $review->user_id)
+                                <form action="{{ route('reviews.destroy', $review->id) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger">Delete Review</button>
+                                </form>
+                            @endif
                         </div>
                     </div>
                 </div>

@@ -20,7 +20,7 @@
                 @endif
             </div>
             <div>
-                <a href="#" class="btn btn-danger mt-2">More Details</a>
+                <a href="{{ route('content.show', ['id' => $id]) }}" class="btn btn-danger mt-2">More Details</a>
             </div>
         </div>
     </div>

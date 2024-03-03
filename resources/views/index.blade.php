@@ -1,14 +1,15 @@
 @extends('layouts.app')
 @section('content')
     <div class="container">
-        <x-hero-movie :title="$latestMovie->title" :release-date="$latestMovie->release_date" :synopsis="$latestMovie->synopsis">
+        <x-hero-movie :title="$latestMovie->title" :release-date="$latestMovie->release_date" :synopsis="$latestMovie->synopsis" :id="$latestMovie->id" >
             <img class="rounded-start w-100" src="{{ $latestMovie->photo_url }}" alt="{{ $latestMovie->title }}"
                 width="720"></x-hero-movie>
         <div class="container mt-5 mb-5">
             <h1>Top 5 Movies</h1>
             <div class="row row-cols-5">
                 @foreach ($movies->take(5) as $movie)
-                    <x-content-card :title="$movie->title" :photo-url="$movie->photo_url" :release-date="$movie->release_date" :average-rating="$movie->averageRating" />
+                    <x-content-card :title="$movie->title" :photo-url="$movie->photo_url" :release-date="$movie->release_date" :average-rating="$movie->averageRating"
+                        :id="$movie->id" />
                 @endforeach
             </div>
         </div>
@@ -38,7 +39,8 @@
             <h1>All Movies</h1>
             <div class="row row-cols-4">
                 @foreach ($movies->shuffle()->take(8) as $movie)
-                    <x-content-card :title="$movie->title" :photo-url="$movie->photo_url" :release-date="$movie->release_date" :average-rating="$movie->averageRating" class="h-100" />
+                    <x-content-card :title="$movie->title" :photo-url="$movie->photo_url" :release-date="$movie->release_date" :average-rating="$movie->averageRating"
+                        :id="$movie->id" class="h-100" />
                 @endforeach
             </div>
             <div class="d-flex justify-content-center mt-2">

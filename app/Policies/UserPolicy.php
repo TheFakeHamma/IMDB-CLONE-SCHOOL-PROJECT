@@ -4,6 +4,7 @@ namespace App\Policies;
 
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
+use Illuminate\Support\Facades\Log;
 
 class UserPolicy
 {
@@ -36,7 +37,9 @@ class UserPolicy
      */
     public function update(User $currentUser, User $user)
     {
-        return $currentUser->id === $user->id || $currentUser->role === 'admin';
+        $isAuthorized = $currentUser->id === $user->id || $currentUser->role === 'admin';
+        Log::info('User update authorization: ' . ($isAuthorized ? 'GRANTED' : 'DENIED') . ' for user: ' . $user->id . ' by user: ' . $currentUser->id);
+        return $isAuthorized;
     }
 
     /**

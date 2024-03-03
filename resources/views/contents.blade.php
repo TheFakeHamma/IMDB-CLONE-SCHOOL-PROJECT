@@ -69,7 +69,7 @@
 
         <div class="row row-cols-4 mt-5">
             @foreach ($contents as $content)
-                <x-content-card :title="$content->title" :photo-url="$content->photo_url" :release-date="$content->release_date" :average-rating="$content->averageRating" class="h-100" />
+                <x-content-card :title="$content->title" :photo-url="$content->photo_url" :release-date="$content->release_date" :average-rating="$content->averageRating" :id="$content->id" class="h-100" />
             @endforeach
         </div>
         <div class="mt-4 d-flex justify-content-center">
