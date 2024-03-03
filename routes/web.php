@@ -34,12 +34,12 @@ Route::get('/contents', [MovieController::class, 'contents'])->name('contents');
 Route::get('/content/{id}', [ContentPage::class, 'show'])->name('content.show');
 
 Route::get('/user/{username}', [UserController::class, 'show'])
-     ->name('user.profile')
-     ->middleware('checkprofileowner');
+     ->name('user.profile');
 
 Route::put('/user/{username}/password', [UserController::class, 'updatePassword'])
      ->name('user.password.update');
 
+     //fix delete function
 Route::delete('/user/{username}', [UserController::class, 'destroy'])
      ->name('user.delete')->middleware(['auth', 'can:delete,user']);
 

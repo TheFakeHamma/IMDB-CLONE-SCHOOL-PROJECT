@@ -18,7 +18,8 @@
                 <!-- Search form -->
                 <form class="flex-fill me-3" role="search" action="{{ route('contents') }}" method="GET">
                     <div class="input-group">
-                        <input class="form-control" type="search" placeholder="Search" aria-label="Search" name="search">
+                        <input class="form-control" type="search" placeholder="Search" aria-label="Search"
+                            name="search">
                         <button class="btn btn-outline-success ms-2" type="submit">Search</button>
                     </div>
                 </form>
@@ -75,6 +76,11 @@
                             </li>
                         @endif
                     @else
+                        <li class="nav-item me-2">
+                            <a class="btn btn-outline-success" href="{{ route('user.profile', Auth::user()->username) }}">
+                                {{ __('Profile') }}
+                            </a>
+                        </li>
                         <li class="nav-item">
                             <a class="btn btn-outline-danger" href="{{ route('logout') }}"
                                 onclick="event.preventDefault();
@@ -85,6 +91,7 @@
                                 @csrf
                             </form>
                         </li>
+
                     @endguest
                 </ul>
                 </ul>

@@ -12,7 +12,12 @@
         <blockquote class="blockquote mb-0">
             <p>{{ $review->review }}</p>
             <footer class="blockquote-footer">
-                <cite title="Source Title">{{ $review->user->username }}</cite>
+                <cite title="Source Title">
+                    <a href="{{ route('user.profile', $review->user->username) }}"
+                        style="color: inherit; text-decoration: none;">
+                        {{ $review->user->username }}
+                    </a>
+                </cite>
             </footer>
         </blockquote>
     </div>
