@@ -46,16 +46,18 @@ class UserController extends Controller
     
     
 
-    public function destroy(User $user)
+    public function destroySelf(User $user)
     {
-        // Anonymize user's reviews
-        $user->reviews()->update(['user_id' => null, 'username' => 'user deleted']);
+        if (auth()->id() !== $user->id) {
+            abort(403);
+        }
 
-        // Delete the user
+        // Anonymize user's reviews
+        $user->reviews()->update(['user_id' => null]);
+
         $user->delete();
 
         return redirect('/')->with('success', 'Account deleted successfully.');
     }
-
 
 }

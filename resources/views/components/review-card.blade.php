@@ -13,10 +13,14 @@
             <p>{{ $review->review }}</p>
             <footer class="blockquote-footer">
                 <cite title="Source Title">
-                    <a href="{{ route('user.profile', $review->user->username) }}"
-                        style="color: inherit; text-decoration: none;">
-                        {{ $review->user->username }}
-                    </a>
+                    @if($review->user)
+                        <a href="{{ route('user.profile', $review->user->username) }}"
+                            style="color: inherit; text-decoration: none;">
+                            {{ $review->user->username }}
+                        </a>
+                    @else
+                        User deleted
+                    @endif
                 </cite>
             </footer>
         </blockquote>

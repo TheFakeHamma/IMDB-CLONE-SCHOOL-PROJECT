@@ -32,11 +32,12 @@
 
 
                 <!-- Delete Account Form -->
-                <form method="POST" class="mt-3" action="{{ route('user.delete', $user->username) }}">
+                <form action="{{ route('user.delete.self', $user->id) }}" method="POST">
                     @csrf
                     @method('DELETE')
                     <button type="submit" class="btn btn-danger">Delete Account</button>
                 </form>
+
 
             </div>
             <div class="modal-footer">

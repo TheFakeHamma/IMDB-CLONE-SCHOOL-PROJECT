@@ -51,7 +51,11 @@ class User extends Authenticatable
 
     public function getRouteKeyName()
     {
-        return 'username';
+        return 'id';
     }
 
+    public function isAdmin()
+    {
+        return $this->role === 'admin';
+    }
 }
