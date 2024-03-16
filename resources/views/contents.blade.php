@@ -7,11 +7,11 @@
             if (request()->has('search')) {
                 $heading = 'Search results for "' . request('search') . '"';
             } elseif (request()->has('genre')) {
-                $heading = 'Filtered';
+                $heading = 'Filtered by Genre';
             } elseif (request('type') == 'movie') {
-                $heading = 'Show all movies';
+                $heading = 'Movies';
             } elseif (request('type') == 'tv_show') {
-                $heading = 'Show all TV shows';
+                $heading = 'TV Shows';
             }
         @endphp
 
@@ -67,13 +67,20 @@
             </div>
         </form>
 
-        <div class="row row-cols-4 mt-5">
-            @foreach ($contents as $content)
-                <x-content-card :title="$content->title" :photo-url="$content->photo_url" :release-date="$content->release_date" :average-rating="$content->averageRating" :id="$content->id" class="h-100" />
-            @endforeach
-        </div>
-        <div class="mt-4 d-flex justify-content-center">
-            {{ $contents->links('vendor.pagination.bootstrap-4') }}
-        </div>
+        @if ($contents->isNotEmpty())
+            <div class="row row-cols-4 mt-5">
+                @foreach ($contents as $content)
+                    <x-content-card :title="$content->title" :photo-url="$content->photo_url" :release-date="$content->release_date" :average-rating="$content->averageRating"
+                        :id="$content->id" class="h-100" />
+                @endforeach
+            </div>
+            <div class="mt-4 d-flex justify-content-center">
+                {{ $contents->links('vendor.pagination.bootstrap-4') }}
+            </div>
+        @else
+            <div class="alert alert-warning mt-3" role="alert">
+                No results found. Please try a different search term or filter.
+            </div>
+        @endif
     </div>
 @endsection

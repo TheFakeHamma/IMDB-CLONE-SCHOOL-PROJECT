@@ -16,17 +16,23 @@
             <!-- Search bar and navigation -->
             <div class="d-flex w-100">
                 <!-- Search form -->
-                <form class="flex-fill me-3" role="search" action="{{ route('contents') }}" method="GET">
+                <form class="flex-fill me-3" role="search" action="{{ route('search') }}" method="GET">
                     <div class="input-group">
                         <input class="form-control" type="search" placeholder="Search" aria-label="Search"
-                            name="search">
+                            name="search" value="{{ request('search') }}">
+                        <select class="form-select" name="searchType" style="width: 20% !important;">
+                            <option value="content"{{ request('searchType') == 'content' ? ' selected' : '' }}>Content
+                            </option>
+                            <option value="people"{{ request('searchType') == 'people' ? ' selected' : '' }}>People
+                            </option>
+                        </select>
                         <button class="btn btn-outline-success ms-2" type="submit">Search</button>
                     </div>
                 </form>
                 <!-- Navigation links -->
                 <ul class="navbar-nav flex-fill justify-content-end me-3">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="{{route('index')}}">Home</a>
+                        <a class="nav-link active" aria-current="page" href="{{ route('index') }}">Home</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" aria-current="page" href="{{ route('people') }}">People</a>

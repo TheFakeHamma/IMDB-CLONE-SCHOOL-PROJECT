@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PeopleController;
 use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\SearchController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\MovieController;
@@ -28,6 +29,7 @@ Route::get('/contents', [MovieController::class, 'contents'])->name('contents');
 Route::get('/content/{id}', [ContentPage::class, 'show'])->name('content.show');
 Route::get('/people', [PeopleController::class, 'people'])->name('people');
 Route::get('/people/{id}', [PeopleController::class, 'show'])->name('people.show');
+Route::get('/search', [SearchController::class, 'search'])->name('search');
 
 // User specific routes
 Route::middleware(['auth'])->group(function () {
