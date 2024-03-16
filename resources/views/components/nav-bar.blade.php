@@ -77,12 +77,9 @@
                                 Admin Panel
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="adminDropdown">
-                                {{-- <li><a class="dropdown-item" href="{{ route('admin.users.index') }}">User Settings</a></li>
-                            <li><a class="dropdown-item" href="{{ route('admin.content.index') }}">Content</a></li>
-                            <li><a class="dropdown-item" href="{{ route('admin.people.index') }}">People</a></li> --}}
                                 <li><a class="dropdown-item" href="{{ route('admin.users.index') }}">User Settings</a></li>
                                 <li><a class="dropdown-item" href="#">Content</a></li>
-                                <li><a class="dropdown-item" href="#">People</a></li>
+                                <li><a class="dropdown-item" href="{{ route('admin.people.index') }}">Manage People</a></li>
                             </ul>
                         </li>
                     @endcan
