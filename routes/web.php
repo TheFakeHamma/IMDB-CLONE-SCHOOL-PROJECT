@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\PeopleController;
 use App\Http\Controllers\ReviewController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -25,6 +26,8 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/contents', [MovieController::class, 'contents'])->name('contents');
 Route::get('/content/{id}', [ContentPage::class, 'show'])->name('content.show');
+Route::get('/people', [PeopleController::class, 'people'])->name('people');
+Route::get('/people/{id}', [PeopleController::class, 'show'])->name('people.show');
 
 // User specific routes
 Route::middleware(['auth'])->group(function () {
