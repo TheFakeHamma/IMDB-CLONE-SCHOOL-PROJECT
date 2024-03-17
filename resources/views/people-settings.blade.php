@@ -119,7 +119,11 @@
                                                 </div>
 
                                                 <button type="submit" class="btn btn-primary">Update Person</button>
-                                                <!-- Trigger button for Delete -->
+                                            </form>
+                                            <form action="{{ route('admin.person.destroy', $person->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this person?');">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger">Delete</button>
                                             </form>
                                         </div>
                                     </div>

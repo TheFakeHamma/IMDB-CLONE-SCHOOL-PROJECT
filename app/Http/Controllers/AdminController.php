@@ -91,4 +91,13 @@ class AdminController extends Controller
 
         return redirect()->route('admin.people.index')->with('success', 'Person created successfully.');
     }
+
+    public function destroyPerson($id)
+    {
+        $person = Person::findOrFail($id);
+
+        $person->delete();
+
+        return redirect()->route('admin.people.index')->with('success', 'Person deleted successfully.');
+    }
 }

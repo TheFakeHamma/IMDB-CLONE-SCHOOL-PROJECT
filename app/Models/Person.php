@@ -24,5 +24,13 @@ class Person extends Model
         return $this->belongsToMany(Content::class, 'content_people')
                     ->withPivot('role');
     }
+
+    protected static function boot() {
+        parent::boot();
+
+        static::deleting(function ($person) {
+            $person->contents()->detach();
+        });
+    }
 }
 

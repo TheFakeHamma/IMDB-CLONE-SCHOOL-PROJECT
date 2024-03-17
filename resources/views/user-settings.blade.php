@@ -70,7 +70,7 @@
                                                 </div>
                                             </form>
                                             <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST"
-                                                class="d-inline">
+                                                class="d-inline" onsubmit="return confirm('Are you sure you want to delete this person?');">
                                                 @csrf
                                                 @method('DELETE')
                                                 <!-- Delete Button -->

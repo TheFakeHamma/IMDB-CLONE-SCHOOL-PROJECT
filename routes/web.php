@@ -49,6 +49,7 @@ Route::middleware(['auth'])->group(function () {
      Route::get('/admin/people', [AdminController::class, 'peopleIndex'])->name('admin.people.index');
      Route::put('/admin/people/{person}', [AdminController::class, 'updatePerson'])->name('admin.person.update');
      Route::post('/admin/people', [AdminController::class, 'createPerson'])->name('admin.person.create');
+     Route::delete('/admin/people/{person}', [AdminController::class, 'destroyPerson'])->name('admin.person.destroy');
  });
  
  
