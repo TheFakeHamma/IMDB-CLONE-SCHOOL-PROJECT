@@ -39,7 +39,8 @@
                                                 aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
-                                            <form action="{{ route('admin.users.update', $user->id) }}" method="POST">
+                                            <form action="{{ route('admin.users.update', $user->id) }}" method="POST"
+                                                class="mb-3">
                                                 @csrf
                                                 @method('PUT')
 
@@ -54,27 +55,31 @@
                                                     <label for="role{{ $user->id }}" class="form-label">Role</label>
                                                     <select class="form-select" id="role{{ $user->id }}"
                                                         name="role">
-                                                        <option value="user"
-                                                            {{ $user->role == 'user' ? 'selected' : '' }}>User</option>
-                                                        <option value="admin"
-                                                            {{ $user->role == 'admin' ? 'selected' : '' }}>Admin</option>
+                                                        <option
+                                                            value="user"{{ $user->role == 'user' ? ' selected' : '' }}>
+                                                            User</option>
+                                                        <option
+                                                            value="admin"{{ $user->role == 'admin' ? ' selected' : '' }}>
+                                                            Admin</option>
                                                     </select>
                                                 </div>
-
-                                                <button type="submit" class="btn btn-primary">Update User</button>
-                                                <form action="{{ route('admin.users.destroy', $user->id) }}"
-                                                    method="POST">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger">Delete</button>
-                                                </form>
-
+                                                <!-- Buttons Container -->
+                                                <div class="d-flex justify-content-start">
+                                                    <!-- Update Button -->
+                                                    <button type="submit" class="btn btn-primary me-2">Update User</button>
+                                                </div>
+                                            </form>
+                                            <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST"
+                                                class="d-inline">
+                                                @csrf
+                                                @method('DELETE')
+                                                <!-- Delete Button -->
+                                                <button type="submit" class="btn btn-danger">Delete</button>
                                             </form>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
                         </td>
                     </tr>
                 @endforeach

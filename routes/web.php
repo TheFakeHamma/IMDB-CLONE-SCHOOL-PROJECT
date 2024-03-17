@@ -42,13 +42,13 @@ Route::middleware(['auth'])->group(function () {
  });
  
  // Admin specific routes
- Route::middleware(['auth', 'can:manage-users'])->group(function () {
+ Route::middleware(['auth', 'can:manage-users', 'can:manage-content'])->group(function () {
      Route::get('/admin/users', [AdminController::class, 'usersIndex'])->name('admin.users.index');
      Route::put('/admin/users/{user}', [AdminController::class, 'updateUser'])->name('admin.users.update');
      Route::delete('/admin/users/{user}', [AdminController::class, 'destroyUser'])->name('admin.users.destroy');
      Route::get('/admin/people', [AdminController::class, 'peopleIndex'])->name('admin.people.index');
      Route::put('/admin/people/{person}', [AdminController::class, 'updatePerson'])->name('admin.person.update');
-
+     Route::post('/admin/people', [AdminController::class, 'createPerson'])->name('admin.person.create');
  });
  
  
