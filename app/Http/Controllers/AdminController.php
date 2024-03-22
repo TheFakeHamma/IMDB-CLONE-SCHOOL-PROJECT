@@ -14,7 +14,7 @@ class AdminController extends Controller
     public function usersIndex()
     {
         $users = User::all();
-        return view('user-settings', compact('users'));
+        return view('admin.users.user-settings', compact('users'));
     }
 
     public function updateUser(Request $request, User $user)
@@ -44,7 +44,7 @@ class AdminController extends Controller
     public function peopleIndex()
     {
         $people = Person::all();
-        return view('people-settings', compact('people'));
+        return view('admin.people.people-settings', compact('people'));
     }
 
     public function updatePerson(Request $request, Person $person)
@@ -107,7 +107,7 @@ class AdminController extends Controller
     {
         $contents = Content::all();
         $genres = Genre::all();
-        return view('contents-settings', compact('contents', 'genres'));
+        return view('admin.contents.contents-settings', compact('contents', 'genres'));
     }
 
     public function createContent(Request $request)
