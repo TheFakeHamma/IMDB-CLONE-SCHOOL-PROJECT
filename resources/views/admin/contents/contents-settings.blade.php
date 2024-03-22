@@ -83,6 +83,7 @@
                     <th scope="col">Title</th>
                     <th scope="col">Release Date</th>
                     <th scope="col">Type</th>
+                    <th scope="col">Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -98,6 +99,8 @@
                                 data-bs-target="#editContentOptionsModal{{ $content->id }}">
                                 Edit
                             </button>
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                data-bs-target="#deleteConfirmationModal{{ $content->id }}">Delete</button>
                             <!-- Edit Options Modal -->
                             <div class="modal fade" id="editContentOptionsModal{{ $content->id }}" tabindex="-1"
                                 aria-labelledby="editContentOptionsModalLabel{{ $content->id }}" aria-hidden="true">
@@ -110,13 +113,40 @@
                                                 aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
-                                            <a href="#" class="btn btn-warning mb-2">Edit Movie</a>
-                                            <a href="#" class="btn btn-info">Manage Cast</a>
+                                            <a href="{{ route('admin.content.edit', $content->id) }}"
+                                                class="btn btn-warning mb-2">Edit Movie</a>
+                                            <a href="{{ route('admin.manage.cast', $content->id) }}"
+                                                class="btn btn-info">Manage Cast</a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
+                            <div class="modal fade" id="deleteConfirmationModal{{ $content->id }}" tabindex="-1"
+                                aria-labelledby="deleteConfirmationModalLabel{{ $content->id }}" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="deleteConfirmationModalLabel{{ $content->id }}">
+                                                Confirm Deletion</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Are you sure you want to delete this content? This action cannot be undone.
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-bs-dismiss="modal">Cancel</button>
+                                            <form action="{{ route('admin.content.destroy', $content->id) }}"
+                                                method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger">Delete</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </td>
                     </tr>
                 @endforeach

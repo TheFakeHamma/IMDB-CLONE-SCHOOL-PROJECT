@@ -141,6 +141,109 @@ class AdminController extends Controller
         // Attach genres to the content
         $content->genres()->sync($validatedData['genres']);
 
-        return redirect()->route('admin.contents.index')->with('success', 'Person created successfully.');
+        return redirect()->route('admin.contents.index')->with('success', 'Content created successfully.');
+    }
+
+    public function editContent($id)
+    {
+        $content = Content::with('genres')->findOrFail($id);
+        $allGenres = Genre::all();
+        return view('admin.contents.edit', compact('content', 'allGenres'));
+    }
+
+    public function updateContent(Request $request, $id)
+    {
+
+        Validator::extend('dataurl', function ($attribute, $value, $parameters, $validator) {
+            if (str_starts_with($value, 'data:image') && preg_match('/^data:image\/(\w+);base64,/', $value)) {
+                return true;
+            }
+            return filter_var($value, FILTER_VALIDATE_URL) !== false;
+        });
+
+        $content = Content::findOrFail($id);
+
+        $validatedData = $request->validate([
+            'title' => 'required|string|max:255',
+            'release_date' => 'required|date',
+            'synopsis' => 'required|string',
+            'type' => 'required|in:movie,tv_show',
+            'photo_url' => 'required|dataurl',
+            'trailer_url' => 'required|url',
+            'genres' => 'required|array|min:1',
+        ]);
+
+        $content->update($validatedData);
+
+        $content->genres()->sync($validatedData['genres']);
+
+        return redirect()->route('admin.contents.index')->with('success', 'Content updated successfully.');
+    }
+
+    public function destroyContent($id)
+    {
+        $content = Content::findOrFail($id);
+    
+        $content->people()->detach();
+        $content->genres()->detach();
+    
+        $content->delete();
+
+        return redirect()->route('admin.contents.index')->with('success', 'Content deleted successfully.');
+    }
+
+    public function manageCast($contentId, Request $request)
+    {
+        $content = Content::with('people')->findOrFail($contentId);
+        $genres = Genre::all();
+
+        $searchCurrentCast = $request->query('search_current_cast');
+        $currentCastQuery = $content->people()->withPivot('role');
+        if ($searchCurrentCast) {
+            $currentCastQuery->where('name', 'like', '%'.$searchCurrentCast.'%');
+        }
+        $currentCast = $currentCastQuery->paginate(10);
+
+        $searchAddCast = $request->query('search_add_cast');
+
+        $currentCastIds = $content->people->pluck('id')->toArray();
+
+        $allPeople = Person::whereNotIn('id', $currentCastIds)
+                            ->when($searchAddCast, function ($query) use ($searchAddCast) {
+                                return $query->where('name', 'like', '%'.$searchAddCast.'%');
+                            })
+                            ->paginate(10);
+
+        return view('admin.contents.manageCast', compact('content', 'currentCast', 'allPeople', 'genres'));
+    }
+
+    public function addCastMember(Request $request, $contentId)
+    {
+        $content = Content::findOrFail($contentId);
+        $personId = $request->input('person_id');
+        $role = $request->input('role');
+
+        $content->people()->attach($personId, ['role' => $role]);
+
+        return back()->with('success', 'Cast member added.');
+    }
+
+    public function removeCastMember($contentId, $personId)
+    {
+        $content = Content::findOrFail($contentId);
+
+        $content->people()->detach($personId);
+
+        return back()->with('success', 'Cast member removed.');
+    }
+
+    public function updateCastRole(Request $request, $contentId, $personId)
+    {
+        $content = Content::findOrFail($contentId);
+        $role = $request->input('role');
+
+        $content->people()->updateExistingPivot($personId, ['role' => $role]);
+
+        return back()->with('success', 'Cast role updated successfully.');
     }
 }

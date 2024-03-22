@@ -54,9 +54,11 @@ Route::middleware(['auth'])->group(function () {
      Route::post('/admin/contents', [AdminController::class, 'createContent'])->name('admin.content.create');
      Route::get('/admin/contents/{content}/edit', [AdminController::class, 'editContent'])->name('admin.content.edit');
      Route::put('/admin/contents/{content}', [AdminController::class, 'updateContent'])->name('admin.content.update');
-     Route::get('/admin/contents/{content}/manage-cast', [AdminController::class, 'manageCast'])->name('admin.content.cast.manage');
-     Route::post('/admin/contents/{content}/cast', [AdminController::class, 'addPersonToCast'])->name('admin.content.cast.add');
-     Route::delete('/admin/contents/{content}/cast/{person}', [AdminController::class, 'removePersonFromCast'])->name('admin.content.cast.remove');
+     Route::delete('/admin/contents/{content}', [AdminController::class, 'destroyContent'])->name('admin.content.destroy');
+     Route::get('/admin/contents/{content}/manage-cast', [AdminController::class, 'manageCast'])->name('admin.manage.cast');
+     Route::post('/admin/contents/{content}/cast', [AdminController::class, 'addCastMember'])->name('admin.cast.add');
+     Route::delete('/admin/contents/{content}/cast/{person}', [AdminController::class, 'removeCastMember'])->name('admin.cast.remove');
+     Route::put('/admin/contents/{content}/cast/{person}', [AdminController::class, 'updateCastRole'])->name('admin.cast.update');
  });
  
  
