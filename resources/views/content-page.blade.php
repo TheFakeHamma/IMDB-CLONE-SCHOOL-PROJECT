@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col-md-12">
                 <x-hero-movie :title="$content->title" :release-date="$content->release_date" :synopsis="$content->synopsis" :id="$content->id" >
-                    <iframe width="560" height="315" src="https://www.youtube.com/embed/s_76M4c4LTo?si=3ZJm0TF9GFy4k7br"
+                    <iframe width="100%" height="315" src="{{ $content->trailer_url }}" frameborder="0"
                         title="YouTube video player" frameborder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                         allowfullscreen></iframe>

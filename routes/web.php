@@ -50,6 +50,13 @@ Route::middleware(['auth'])->group(function () {
      Route::put('/admin/people/{person}', [AdminController::class, 'updatePerson'])->name('admin.person.update');
      Route::post('/admin/people', [AdminController::class, 'createPerson'])->name('admin.person.create');
      Route::delete('/admin/people/{person}', [AdminController::class, 'destroyPerson'])->name('admin.person.destroy');
+     Route::get('/admin/contents', [AdminController::class, 'contentsIndex'])->name('admin.contents.index');
+     Route::post('/admin/contents', [AdminController::class, 'createContent'])->name('admin.content.create');
+     Route::get('/admin/contents/{content}/edit', [AdminController::class, 'editContent'])->name('admin.content.edit');
+     Route::put('/admin/contents/{content}', [AdminController::class, 'updateContent'])->name('admin.content.update');
+     Route::get('/admin/contents/{content}/manage-cast', [AdminController::class, 'manageCast'])->name('admin.content.cast.manage');
+     Route::post('/admin/contents/{content}/cast', [AdminController::class, 'addPersonToCast'])->name('admin.content.cast.add');
+     Route::delete('/admin/contents/{content}/cast/{person}', [AdminController::class, 'removePersonFromCast'])->name('admin.content.cast.remove');
  });
  
  

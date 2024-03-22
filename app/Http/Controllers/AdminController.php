@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Content;
+use App\Models\Genre;
 use App\Models\Person;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -99,5 +101,46 @@ class AdminController extends Controller
         $person->delete();
 
         return redirect()->route('admin.people.index')->with('success', 'Person deleted successfully.');
+    }
+
+    public function contentsIndex()
+    {
+        $contents = Content::all();
+        $genres = Genre::all();
+        return view('contents-settings', compact('contents', 'genres'));
+    }
+
+    public function createContent(Request $request)
+    {
+        Validator::extend('dataurl', function ($attribute, $value, $parameters, $validator) {
+            if (str_starts_with($value, 'data:image') && preg_match('/^data:image\/(\w+);base64,/', $value)) {
+                return true;
+            }
+            return filter_var($value, FILTER_VALIDATE_URL) !== false;
+        });
+
+        $validatedData = $request->validate([
+            'title' => 'required|string|max:255',
+            'release_date' => 'required|date',
+            'synopsis' => 'required|string',
+            'type' => 'required|in:movie,tv_show',
+            'photo_url' => 'required|dataurl',
+            'trailer_url' => 'required|url',
+            'genres' => 'required|array|min:1', // Make sure at least one genre is selected
+        ]);
+
+        $content = new Content;
+        $content->title = $validatedData['title'];
+        $content->release_date = $validatedData['release_date'];
+        $content->synopsis = $validatedData['synopsis'];
+        $content->type = $validatedData['type'];
+        $content->photo_url = $validatedData['photo_url'];
+        $content->trailer_url = $validatedData['trailer_url'];
+        $content->save();
+
+        // Attach genres to the content
+        $content->genres()->sync($validatedData['genres']);
+
+        return redirect()->route('admin.contents.index')->with('success', 'Person created successfully.');
     }
 }
