@@ -39,6 +39,11 @@ class Content extends Model
         return $this->hasMany(Review::class);
     }
 
+    public function watchlistedBy()
+    {
+        return $this->hasMany(Watchlist::class);
+    }
+
     protected $appends = ['averageRating'];
 
     public function getAverageRatingAttribute()

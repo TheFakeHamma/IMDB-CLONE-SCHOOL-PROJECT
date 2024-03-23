@@ -4,12 +4,19 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <x-hero-movie :title="$content->title" :release-date="$content->release_date" :synopsis="$content->synopsis" :id="$content->id" >
+                <x-hero-movie :title="$content->title" :release-date="$content->release_date" :synopsis="$content->synopsis" :id="$content->id">
                     <iframe width="100%" height="315" src="{{ $content->trailer_url }}" frameborder="0"
                         title="YouTube video player" frameborder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                         allowfullscreen></iframe>
                 </x-hero-movie>
+
+                @if (Auth::check() && !Auth::user()->watchlist->contains('content_id', $content->id))
+                    <form method="POST" action="{{ route('watchlist.add', $content->id) }}">
+                        @csrf
+                        <button type="submit" class="btn btn-primary">Add to Watchlist</button>
+                    </form>
+                @endif
 
                 <div>
                     <h3>Cast</h3>
@@ -79,9 +86,6 @@
                         <p>No reviews yet.</p>
                     @endforelse
                 </div>
-
-
-
             </div>
         </div>
     </div>

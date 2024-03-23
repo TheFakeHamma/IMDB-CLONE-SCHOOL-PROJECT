@@ -49,6 +49,11 @@ class User extends Authenticatable
         return $this->hasMany(Review::class);
     }
 
+    public function watchlist()
+    {
+        return $this->hasMany(Watchlist::class);
+    }
+
     public function getRouteKeyName()
     {
         return 'id';

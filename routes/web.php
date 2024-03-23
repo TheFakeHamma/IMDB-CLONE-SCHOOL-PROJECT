@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PeopleController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\WatchlistController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\MovieController;
@@ -36,9 +37,13 @@ Route::middleware(['auth'])->group(function () {
      Route::get('/user/{username}', [UserController::class, 'show'])->name('user.profile');
      Route::put('/user/{username}/password', [UserController::class, 'updatePassword'])->name('user.password.update');
      Route::delete('/user/{user}', [UserController::class, 'destroySelf'])->name('user.delete.self');
-     
      Route::post('/reviews', [ReviewController::class, 'store'])->name('reviews.store');
      Route::delete('/reviews/{review}', [ReviewController::class, 'destroy'])->name('reviews.destroy');
+     Route::get('/watchlist', [WatchlistController::class, 'index'])->name('watchlist');
+     Route::post('/watchlist/add/{content}', [WatchlistController::class, 'addToWatchlist'])->name('watchlist.add');
+     Route::post('/watchlist/watched/{content}', [WatchlistController::class, 'markAsWatched'])->name('watchlist.watched');
+     Route::post('/watchlist/not-watched/{content}', [WatchlistController::class, 'markAsNotWatched'])->name('watchlist.not-watched');
+     Route::delete('/watchlist/remove/{content}', [WatchlistController::class, 'removeFromWatchlist'])->name('watchlist.remove');
  });
  
  // Admin specific routes
@@ -60,6 +65,3 @@ Route::middleware(['auth'])->group(function () {
      Route::delete('/admin/contents/{content}/cast/{person}', [AdminController::class, 'removeCastMember'])->name('admin.cast.remove');
      Route::put('/admin/contents/{content}/cast/{person}', [AdminController::class, 'updateCastRole'])->name('admin.cast.update');
  });
- 
- 
- 
