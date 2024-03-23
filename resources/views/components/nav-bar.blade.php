@@ -87,6 +87,7 @@
                                 </li>
                                 <li><a class="dropdown-item" href="{{ route('admin.people.index') }}">Manage People</a>
                                 </li>
+                                <li><a class="dropdown-item" href="{{ route('admin.genres.index') }}">Manage Genres</a>
                             </ul>
                         </li>
                     @endcan
@@ -107,7 +108,8 @@
                         @endif
                     @else
                         <li class="nav-item me-2">
-                            <a class="btn btn-outline-success" href="{{ route('user.profile', Auth::user()->username) }}">
+                            <a class="btn btn-outline-success"
+                                href="{{ route('user.profile', Auth::user()->username) }}">
                                 {{ __('Profile') }}
                             </a>
                         </li>

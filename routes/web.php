@@ -64,4 +64,8 @@ Route::middleware(['auth'])->group(function () {
      Route::post('/admin/contents/{content}/cast', [AdminController::class, 'addCastMember'])->name('admin.cast.add');
      Route::delete('/admin/contents/{content}/cast/{person}', [AdminController::class, 'removeCastMember'])->name('admin.cast.remove');
      Route::put('/admin/contents/{content}/cast/{person}', [AdminController::class, 'updateCastRole'])->name('admin.cast.update');
+     Route::get('/admin/genres', [AdminController::class, 'genresIndex'])->name('admin.genres.index');
+     Route::post('/admin/genres', [AdminController::class, 'genreCreate'])->name('admin.genre.create');
+     Route::put('/admin/genres/{genre}', [AdminController::class, 'genreUpdate'])->name('admin.genre.update');
+     Route::delete('/admin/genres/{genre}', [AdminController::class, 'genreDestroy'])->name('admin.genre.destroy');
  });

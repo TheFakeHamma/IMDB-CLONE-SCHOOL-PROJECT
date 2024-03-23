@@ -246,4 +246,47 @@ class AdminController extends Controller
 
         return back()->with('success', 'Cast role updated successfully.');
     }
+
+    public function genresIndex()
+    {
+        $genres = Genre::all();
+        return view('admin.genres.genres-settings', compact('genres'));
+    }
+
+    public function genreCreate(Request $request)
+    {
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+        ]);
+
+        $genre = new Genre;
+        $genre->name = $validatedData['name'];
+        $genre->save();
+
+        return redirect()->route('admin.genres.index')->with('success', 'Genre created successfully.');
+    }
+
+    public function genreUpdate(Request $request, $id)
+    {
+        $genre = Genre::findOrFail($id);
+
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+        ]);
+
+        $genre->update($validatedData);
+
+        return redirect()->route('admin.genres.index')->with('success', 'Genre updated successfully.');
+    }
+
+    public function genreDestroy($id)
+    {
+        $genre = Genre::findOrFail($id);
+
+        $genre->contents()->detach();
+
+        $genre->delete();
+
+        return redirect()->route('admin.genres.index')->with('success', 'Genre deleted successfully.');
+    }
 }
