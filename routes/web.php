@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\ContentPage;
+use App\Http\Controllers\GenreController;
 use App\Http\Controllers\UserController;
 
 /*
@@ -31,6 +32,7 @@ Route::get('/content/{id}', [ContentPage::class, 'show'])->name('content.show');
 Route::get('/people', [PeopleController::class, 'people'])->name('people');
 Route::get('/people/{id}', [PeopleController::class, 'show'])->name('people.show');
 Route::get('/search', [SearchController::class, 'search'])->name('search');
+Route::get('/genres', [GenreController::class, 'genresIndex'])->name('genres');
 
 // User specific routes
 Route::middleware(['auth'])->group(function () {

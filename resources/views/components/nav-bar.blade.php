@@ -66,7 +66,7 @@
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a class="dropdown-item" href="#">All Genres</a></li>
+                            <li><a class="dropdown-item" href="{{route('genres')}}">All Genres</a></li>
                         </ul>
                     </li>
                     @if (Auth::check())
