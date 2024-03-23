@@ -26,5 +26,9 @@ class AppServiceProvider extends ServiceProvider
             $genres = Genre::limit(3)->get();
             $view->with('genres', $genres);
         });
+
+        View::composer('components.footer', function ($view) {
+            $view->with('genres', Genre::all());
+        });
     }
 }
