@@ -69,6 +69,11 @@
                             <li><a class="dropdown-item" href="#">All Genres</a></li>
                         </ul>
                     </li>
+                    @if (Auth::check())
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('watchlist') }}">My Watchlist</a>
+                        </li>
+                    @endif
                     {{-- User admin panel --}}
                     @can('manage-users')
                         <li class="nav-item dropdown">
@@ -78,7 +83,8 @@
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="adminDropdown">
                                 <li><a class="dropdown-item" href="{{ route('admin.users.index') }}">User Settings</a></li>
-                                <li><a class="dropdown-item" href="{{ route('admin.contents.index') }}">Manage Contents</a></li>
+                                <li><a class="dropdown-item" href="{{ route('admin.contents.index') }}">Manage Contents</a>
+                                </li>
                                 <li><a class="dropdown-item" href="{{ route('admin.people.index') }}">Manage People</a>
                                 </li>
                             </ul>
