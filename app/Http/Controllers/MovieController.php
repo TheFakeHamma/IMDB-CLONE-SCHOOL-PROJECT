@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Content;
+use App\Models\Watchlist;
 use Illuminate\Http\Request;
 use App\Models\Genre;
+use Illuminate\Support\Facades\Auth;
 
 class MovieController extends Controller
 {
@@ -20,7 +22,31 @@ class MovieController extends Controller
             $latestMovie->averageRating = $latestMovie->reviews->avg('rating') ?? 'No reviews';
         }
 
-        return view('index', compact('movies', 'latestMovie'));
+        $watchListItems = collect();
+
+        if (Auth::check()) {
+            $watchListItems = Watchlist::where('user_id', Auth::id())
+                ->where('watched', false)
+                ->with('content.genres', 'content.reviews')
+                ->take(5)
+                ->get();
+        }
+
+        $topMovies = Content::where('type', 'movie')
+            ->withAvg('reviews', 'rating')
+            ->with('reviews')
+            ->orderByDesc('reviews_avg_rating')
+            ->orderByDesc('release_date')
+            ->take(5)
+            ->get();
+
+        $topGenres = Genre::withCount(['contents' => function($query) {
+                $query->where('type', 'movie');
+            }])->orderBy('contents_count', 'desc')
+            ->take(5)
+            ->get();
+
+        return view('index', compact('movies', 'latestMovie', 'watchListItems', 'topMovies', 'topGenres'));
     }
 
 
@@ -30,7 +56,7 @@ class MovieController extends Controller
 
         $heading = 'All Content';
 
-        // Adjust the heading based on the request parameters
+        
         if ($request->filled('search')) {
             $heading = 'Search results for "' . $request->search . '"';
         } elseif ($request->filled('genre')) {
@@ -51,7 +77,7 @@ class MovieController extends Controller
             $query->where('type', $request->type);
         }
 
-        // Filter by release date range
+        
         if ($request->has('release_date_from') && $request->release_date_from != '') {
             $query->where('release_date', '>=', $request->release_date_from);
         }
@@ -59,7 +85,7 @@ class MovieController extends Controller
             $query->where('release_date', '<=', $request->release_date_to);
         }
 
-        // Search filter
+       
         if ($request->has('search')) {
             $search = $request->search;
             $query->where(function($query) use ($search) {
@@ -68,7 +94,7 @@ class MovieController extends Controller
                           $query->where('name', 'LIKE', "%{$search}%");
                       });
 
-                // Check if the search term is a year
+                
                 if (is_numeric($search)) {
                   $query->orWhereYear('release_date', '=', $search);
                 }
