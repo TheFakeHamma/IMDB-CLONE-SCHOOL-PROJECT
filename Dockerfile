@@ -28,3 +28,6 @@ RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
 ENTRYPOINT ["docker-entrypoint.sh"]
 CMD ["apache2-foreground"]
+
+# Suppress the Apache FQDN warning
+RUN echo 'ServerName localhost' >> /etc/apache2/apache2.conf
