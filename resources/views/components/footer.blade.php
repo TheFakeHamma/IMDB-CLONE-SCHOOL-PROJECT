@@ -56,6 +56,6 @@
     </div>
 
     <div class="text-center p-4 text-light">
-        © 2024 Copyright: <a class="text-reset fw-bold" href="{{ route('index') }}">FilmSphere.com</a>
+        © 2024 Copyright: <a class="text-reset fw-bold" href="{{ route('index') }}">imdb-clone-school-project-production.up.railway.app</a>
     </div>
 </footer>
