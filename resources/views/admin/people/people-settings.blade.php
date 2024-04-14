@@ -63,7 +63,7 @@
                     <tr>
                         <th scope="row">{{ $person->id }}</th>
                         <td>{{ $person->name }}</td>
-                        <td>{{ $person->bio }}</td>
+                        <td>{{ \Illuminate\Support\Str::limit($person->bio, 100) }}</td>
                         <td>
                             <!-- Trigger modal button for Edit -->
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal"
