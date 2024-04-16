@@ -1,4 +1,4 @@
-<p align="center"><a href="#" target="_blank"><img src="public/images/logo.png" alt="FilmSphere Logo"></a></p>
+<p align="center" style="margin-bottom: -110px; margin-top: -110px;"><a href="#" target="_blank"><img src="public/images/logo.png" alt="FilmSphere Logo" style="margin-bottom: -10px;"></a></p>
 
 # FilmSphere
 ## Project Overview
