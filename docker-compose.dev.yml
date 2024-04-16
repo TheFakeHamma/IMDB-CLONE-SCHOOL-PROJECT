@@ -1,0 +1,32 @@
+version: "3.8"
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "8000:80"
+    volumes:
+      - .:/var/www/html
+    depends_on:
+      - db
+      - mailhog
+  db:
+    image: mariadb:10.6 # MariaDB is often more compatible with ARM64
+    platform: linux/amd64 # This forces it to use the AMD64 version if ARM64 isn't working
+    volumes:
+      - db_data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: imdbCloneDB
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    ports:
+      - "3306:3306"
+  mailhog:
+    image: mailhog/mailhog
+    ports:
+      - "8025:8025"
+      - "1025:1025"
+volumes:
+  db_data:

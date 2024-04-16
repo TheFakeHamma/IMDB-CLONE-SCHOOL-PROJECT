@@ -1,66 +1,54 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+<p align="center"><a href="#" target="_blank"><img src="public/images/logo.png" alt="FilmSphere Logo"></a></p>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+# FilmSphere
+## Project Overview
+FilmSphere is a web application developed as part of a school project, designed to cater to movie enthusiasts. It provides extensive details about movies, including cast and crew information, reviews, and user ratings. Users can browse movies, manage personal watchlists, and interact with content dynamically. Built with **Laravel**, FilmSphere offers a responsive and interactive user experience. This project is released under the MIT license. **Please note that while the code can be freely used and modified, I do not take responsibility for any repercussions of its reuse.**
 
-## About Laravel
+## Local Environment Setup
+### Prerequisites
+* Docker
+* Composer
+* Node.js and npm
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### Steps
+1. Clone the repository:
+    ```Bash
+    git clone https://github.com/TheFakeHamma/imdb-clone-school-project.git
+    cd imdb-clone-school-project
+    ```
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+2. Set up environment variables:
+    * Copy the `.env.example`file to `.env`:
+        ```bash
+        cp .env.example .env
+        ```
+    * Generate an application key:
+        ```bash
+        php artisan key:generate
+        ```
+    * Update the `.env`file to match your local database and other services configurations.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+3. Start the Docker containers:
+    * Build and run the Docker containers using `docker-compose`for development:
+        ```bash
+        docker-compose -f docker-compose.dev.yml up --build
+        ```
+    * This command starts all the necessary services defined in your `docker-compose.dev.yml`file, including your app's server, database, and any other services like MailHog for mail catching.
 
-## Learning Laravel
+4. Run database migrations and seeders:
+    * After the containers are up, run:
+        ```bash
+        php artisan migrate --seed
+        ```
+    * This command will set up your database schema and populate it with any initial data needed for the application.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+5. Access the application:
+    * The application will be available at `http://localhost:8000` (or another port specified in your `docker-compose.dev.yml`).
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## Deployment
+The application is deployed on Railway. It uses configurations tailored for Railway to ensure optimal performance and stability. The deployment process is managed through the Railway dashboard, where environment variables and other deployment settings are configured.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Live Application
+Visit the live application at [FilmSphere](https://imdb-clone-school-project-production.up.railway.app/).
 
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Feel free to explore the repository for more details on project setup and usage. If you need any assistance, please refer to online documentation for Laravel or consult community forums and resources.
