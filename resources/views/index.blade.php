@@ -1,17 +1,25 @@
 @extends('layouts.app')
 @section('content')
     <div class="container">
-        <x-hero-movie :title="$latestMovie->title" :release-date="$latestMovie->release_date" :synopsis="$latestMovie->synopsis" :id="$latestMovie->id">
-            <img class="rounded-start w-100" src="{{ $latestMovie->photo_url }}" alt="{{ $latestMovie->title }}"
-                width="720"></x-hero-movie>
+        @if (isset($latestMovie))
+            <x-hero-movie :title="$latestMovie->title" :release-date="$latestMovie->release_date" :synopsis="$latestMovie->synopsis" :id="$latestMovie->id">
+                <img class="rounded-start w-100" src="{{ $latestMovie->photo_url }}" alt="{{ $latestMovie->title }}"
+                    width="720"></x-hero-movie>
+        @else
+            <p class="text-center">We are working on our website. New content will be available soon.</p>
+        @endif
         <div class="container mt-5 mb-5">
             <h1>Top 5 Movies</h1>
-            <div class="row row-cols-5">
-                @foreach ($topMovies as $movie)
-                    <x-content-card :title="$movie->title" :photo-url="$movie->photo_url" :release-date="$movie->release_date" :average-rating="$movie->reviews_avg_rating"
-                        :id="$movie->id" />
-                @endforeach
-            </div>
+            @if ($topMovies->isNotEmpty())
+                <div class="row row-cols-5">
+                    @foreach ($topMovies as $movie)
+                        <x-content-card :title="$movie->title" :photo-url="$movie->photo_url" :release-date="$movie->release_date" :average-rating="$movie->reviews_avg_rating"
+                            :id="$movie->id" />
+                    @endforeach
+                </div>
+            @else
+                <p class="text-center">We are working on our website. New content will be available soon.</p>
+            @endif
         </div>
         <div class="container text-center mt-5">
             <div class="p-5 lc-block">
@@ -26,26 +34,33 @@
                             every movie takes you on a unique journey.</p>
                     </div>
                 </div>
-                <div class="lc-block mb-2">
-                    @foreach ($topGenres as $genre)
-                        <a class="btn btn-danger" style="min-width: 100px; margin-right: 10px;" href="{{ route('contents') }}?genre[]={{ $genre->name }}&type=movie" role="button">
-                            {{ $genre->name }}
-                        </a>
-                    @endforeach
-                </div>
+                @if ($topGenres->isNotEmpty())
+                    <div class="lc-block mb-2">
+                        @foreach ($topGenres as $genre)
+                            <a class="btn btn-danger" style="min-width: 100px; margin-right: 10px;"
+                                href="{{ route('contents') }}?genre[]={{ $genre->name }}&type=movie" role="button">
+                                {{ $genre->name }}
+                            </a>
+                        @endforeach
+                    </div>
+                @endif
             </div>
         </div>
         <div class="container mt-5 mb-5">
             <h1>All Movies</h1>
-            <div class="row row-cols-4">
-                @foreach ($movies->shuffle()->take(8) as $movie)
-                    <x-content-card :title="$movie->title" :photo-url="$movie->photo_url" :release-date="$movie->release_date" :average-rating="$movie->averageRating"
-                        :id="$movie->id" class="h-100" />
-                @endforeach
-            </div>
-            <div class="d-flex justify-content-center mt-2">
-                <a href="{{ route('contents') }}?type=movie" class="btn btn-danger" style="width: 100px;">View All</a>
-            </div>
+            @if ($movies->isNotEmpty())
+                <div class="row row-cols-4">
+                    @foreach ($movies->shuffle()->take(8) as $movie)
+                        <x-content-card :title="$movie->title" :photo-url="$movie->photo_url" :release-date="$movie->release_date" :average-rating="$movie->averageRating"
+                            :id="$movie->id" class="h-100" />
+                    @endforeach
+                </div>
+                <div class="d-flex justify-content-center mt-2">
+                    <a href="{{ route('contents') }}?type=movie" class="btn btn-danger" style="width: 100px;">View All</a>
+                </div>
+            @else
+                <p class="text-center">We are working on our website. New content will be available soon.</p>
+            @endif
         </div>
         @guest
             <div class="container mt-5 mb-5">
