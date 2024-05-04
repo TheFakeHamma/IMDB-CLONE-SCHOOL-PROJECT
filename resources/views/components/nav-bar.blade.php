@@ -1,132 +1,58 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary bg-dark border-bottom border-body r" data-bs-theme="dark">
-    <div class="container-fluid">
+<nav class="bg-white border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-900">
+    <div class="container-fluid max-w-7xl mx-auto flex flex-wrap justify-between items-center">
         <!-- Logo -->
-        <a class="navbar-brand" href="{{ route('index') }}">
-            <img src="{{ asset('images/logo-small.png') }}" alt="Logo" width="100%">
+        <a class="flex items-center" href="{{ route('index') }}">
+            <img src="{{ asset('images/logo-small.png') }}" alt="Logo" class="mr-3 h-6 sm:h-9">
         </a>
 
-        <!-- Toggle button -->
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <!-- Mobile menu button -->
+        <button class="inline-flex items-center p-2 ml-3 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
         <!-- Navbar content -->
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <!-- Search bar and navigation -->
-            <div class="d-flex w-100">
+        <div class="hidden w-full md:block md:w-auto" id="navbarSupportedContent">
+            <div class="flex flex-col mt-4 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium">
                 <!-- Search form -->
-                <form class="flex-fill me-3" role="search" action="{{ route('search') }}" method="GET">
-                    <div class="input-group">
-                        <input class="form-control" type="search" placeholder="Search" aria-label="Search"
-                            name="search" value="{{ request('search') }}">
-                        <select class="form-select" name="searchType" style="width: 20% !important;">
-                            <option value="content"{{ request('searchType') == 'content' ? ' selected' : '' }}>Content
-                            </option>
-                            <option value="people"{{ request('searchType') == 'people' ? ' selected' : '' }}>People
-                            </option>
+                <form class="flex-grow mr-3" role="search" action="{{ route('search') }}" method="GET">
+                    <div class="input-group relative flex items-stretch w-full">
+                        <input class="form-input rounded-l-md" type="search" placeholder="Search" aria-label="Search" name="search" value="{{ request('search') }}">
+                        <select class="form-select block w-20 rounded-none rounded-r-md" name="searchType">
+                            <option value="content"{{ request('searchType') == 'content' ? ' selected' : '' }}>Content</option>
+                            <option value="people"{{ request('searchType') == 'people' ? ' selected' : '' }}>People</option>
                         </select>
-                        <button class="btn btn-outline-success ms-2" type="submit">Search</button>
+                        <button class="btn inline-block px-6 py-2.5 bg-green-500 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-green-700 hover:shadow-lg focus:bg-green-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-800 active:shadow-lg transition duration-150 ease-in-out ml-1" type="submit">Search</button>
                     </div>
                 </form>
                 <!-- Navigation links -->
-                <ul class="navbar-nav flex-fill justify-content-end me-3">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="{{ route('index') }}">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="{{ route('people') }}">People</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                            aria-expanded="false">
-                            Movies & Shows
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="{{ route('contents') }}?type=movie">Movies</a></li>
-                            <li><a class="dropdown-item" href="{{ route('contents') }}?type=tv_show">TV Shows</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li><a class="dropdown-item" href="{{ route('contents') }}">Show all</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                            aria-expanded="false">
-                            Genres
-                        </a>
-                        <ul class="dropdown-menu">
-                            @foreach ($genres as $genre)
-                                <li class="nav-item">
-                                    <a class="dropdown-item"
-                                        href="{{ route('contents') }}?genre[]={{ $genre->name }}">{{ $genre->name }}</a>
+                <div class="flex flex-grow justify-end">
+                    <ul class="flex flex-col mt-4 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium">
+                        <li>
+                            <a class="nav-link block py-2 pr-4 pl-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white" href="{{ route('index') }}" aria-current="page">Home</a>
+                        </li>
+                        <li>
+                            <a class="nav-link block py-2 pr-4 pl-3 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent" href="{{ route('people') }}">People</a>
+                        </li>
+                        <!-- More navigation items -->
+                    </ul>
+                    <ul class="flex flex-col mt-4 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium">
+                        @guest
+                            @if (Route::has('login'))
+                                <li>
+                                    <a class="btn bg-green-500 hover:bg-green-700 text-white py-2 px-4 rounded" href="{{ route('login') }}">{{ __('Login') }}</a>
                                 </li>
-                            @endforeach
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li><a class="dropdown-item" href="{{route('genres')}}">All Genres</a></li>
-                        </ul>
-                    </li>
-                    @if (Auth::check())
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('watchlist') }}">My Watchlist</a>
-                        </li>
-                    @endif
-                    {{-- User admin panel --}}
-                    @can('manage-users')
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="adminDropdown" role="button"
-                                data-bs-toggle="dropdown" aria-expanded="false">
-                                Admin Panel
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="adminDropdown">
-                                <li><a class="dropdown-item" href="{{ route('admin.users.index') }}">User Settings</a></li>
-                                <li><a class="dropdown-item" href="{{ route('admin.contents.index') }}">Manage Contents</a>
+                            @endif
+                            @if (Route::has('register'))
+                                <li>
+                                    <a class="btn border border-green-500 hover:bg-green-500 text-green-500 hover:text-white py-2 px-4 rounded" href="{{ route('register') }}">{{ __('Register') }}</a>
                                 </li>
-                                <li><a class="dropdown-item" href="{{ route('admin.people.index') }}">Manage People</a>
-                                </li>
-                                <li><a class="dropdown-item" href="{{ route('admin.genres.index') }}">Manage Genres</a>
-                            </ul>
-                        </li>
-                    @endcan
-                </ul>
-                <ul class="navbar-nav">
-                    @guest
-                        @if (Route::has('login'))
-                            <li class="nav-item me-2">
-                                <a class="btn btn-success" href="{{ route('login') }}">{{ __('Login') }}</a>
-                            </li>
-                        @endif
-
-                        @if (Route::has('register'))
-                            <li class="nav-item">
-                                <a class="btn btn-outline-success ms-2"
-                                    href="{{ route('register') }}">{{ __('Register') }}</a>
-                            </li>
-                        @endif
-                    @else
-                        <li class="nav-item me-2">
-                            <a class="btn btn-outline-success"
-                                href="{{ route('user.profile', Auth::user()->username) }}">
-                                {{ __('Profile') }}
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="btn btn-outline-danger" href="{{ route('logout') }}"
-                                onclick="event.preventDefault();
-                                                 document.getElementById('logout-form').submit();">
-                                {{ __('Logout') }}
-                            </a>
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                @csrf
-                            </form>
-                        </li>
-
-                    @endguest
-                </ul>
-                </ul>
+                            @endif
+                        @else
+                            <!-- User Profile & Logout -->
+                        @endguest
+                    </ul>
+                </div>
             </div>
         </div>
+    </div>
 </nav>

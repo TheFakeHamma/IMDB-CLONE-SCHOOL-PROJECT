@@ -1,55 +1,80 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
-        <h1>{{ $user->username }}'s Profile</h1>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h1 class="text-2xl font-bold">{{ $user->username }}'s Profile</h1>
         <p>Email: {{ $user->email }}</p>
+
         <!-- Button trigger modal -->
         @if (Auth::check() && Auth::user()->id == $user->id)
-            <!-- Button trigger modal -->
-            <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            <button id="openModalBtn" type="button" class="bg-yellow-400 hover:bg-yellow-500 text-white font-bold py-2 px-4 rounded">
                 User Settings
             </button>
 
+            <!-- Settings Modal -->
             <x-settings-modal :user="$user" />
         @endif
 
-
-        <h3>User Reviews</h3>
-        <div class="row">
-
+        <h3 class="text-xl font-semibold mt-6">User Reviews</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-3">
             @forelse ($user->reviews as $review)
-                <div class="col-sm-6 mb-3 mb-sm-0 mt-3">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ $review->content->title }}</h5>
-                            <p class="card-text">
+                <div class="mb-4">
+                    <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+                        <div class="p-4">
+                            <h5 class="text-lg font-bold">{{ $review->content->title }}</h5>
+                            <div class="flex">
                                 {{-- Display rating as stars --}}
                                 @for ($i = 0; $i < 5; $i++)
                                     @if ($i < $review->rating)
-                                        <span class="fa fa-star checked" style="color: orange;"></span>
+                                        <svg class="w-5 h-5 text-yellow-400 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M10 15l-5.5 3 1.5-5.5L0 8h5.6L10 3l3.4 5H19l-5 4.5 1.5 5.5z"/></svg>
                                     @else
-                                        <span class="fa fa-star" style="color: grey;"></span>
+                                        <svg class="w-5 h-5 text-gray-300 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M10 15l-5.5 3 1.5-5.5L0 8h5.6L10 3l3.4 5H19l-5 4.5 1.5 5.5z"/></svg>
                                     @endif
                                 @endfor
-                            </p>
-                            <p class="card-text">{{ $review->review }}</p>
-                            {{-- Link to the movie --}}
-                            <a href="/content/{{ $review->content->id }}" class="btn btn-primary">Go to
+                            </div>
+                            <p class="mt-2">{{ $review->review }}</p>
+                            <a href="/content/{{ $review->content->id }}" class="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4">Go to
                                 {{ str_replace('_', ' ', $review->content->type) }}</a>
                             @if (Auth::check() && Auth::user()->id == $review->user_id)
-                                <form action="{{ route('reviews.destroy', $review->id) }}" method="POST">
+                                <form action="{{ route('reviews.destroy', $review->id) }}" method="POST" class="mt-4">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-danger">Delete Review</button>
+                                    <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete Review</button>
                                 </form>
                             @endif
                         </div>
                     </div>
                 </div>
             @empty
-                <p>No reviews yet.</p>
+                <p class="text-gray-600">No reviews yet.</p>
             @endforelse
         </div>
     </div>
+
+    <!-- Modal Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const modal = document.getElementById('exampleModal');
+            const openModalBtn = document.getElementById('openModalBtn');
+            const closeModalBtns = document.querySelectorAll('.close-button'); // This selects all close buttons if there are multiple.
+    
+            openModalBtn.addEventListener('click', function () {
+                modal.classList.remove('hidden'); // Show modal
+            });
+    
+            closeModalBtns.forEach(btn => {
+                btn.addEventListener('click', function () {
+                    modal.classList.add('hidden'); // Hide modal
+                });
+            });
+    
+            // Optionally, close the modal by clicking outside of it
+            window.addEventListener('click', function (event) {
+                if (event.target == modal) {
+                    modal.classList.add('hidden'); // Hide modal
+                }
+            });
+        });
+    </script>
+    
 @endsection

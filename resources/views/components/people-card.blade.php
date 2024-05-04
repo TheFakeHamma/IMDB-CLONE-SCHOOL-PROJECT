@@ -1,20 +1,20 @@
-<div class="col mb-4">
-    <div class="card h-100" style="width: 15rem;">
+<div class="mb-4">
+    <div class="bg-white shadow rounded overflow-hidden h-full" style="width: 15rem;">
         @if ($photoUrl)
-            <img src="{{ $photoUrl }}" class="card-img-top" alt="{{ $name }}">
+            <img src="{{ $photoUrl }}" class="w-full h-48 object-cover" alt="{{ $name }}">
         @endif
-        <div class="card-body d-flex flex-column justify-content-between">
+        <div class="flex flex-col justify-between p-4 h-full">
             <div>
-                <h5 class="card-title">{{ $name }}</h5>
-                <p class="card-text">
+                <h5 class="text-lg font-bold">{{ $name }}</h5>
+                <p class="text-sm">
                     {{ strlen($bio) > 100 ? substr($bio, 0, 100) . '...' : $bio }}
                 </p>
                 @if (isset($role))
-                    <footer class="blockquote-footer mt-2">Role - {{ $role }}</footer>
+                    <footer class="text-gray-600 mt-2 text-sm">Role - {{ $role }}</footer>
                 @endif
             </div>
             <div>
-                <a href="#" class="btn btn-danger mt-2">More Details</a>
+                <a href="#" class="inline-block bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mt-2">More Details</a>
             </div>
         </div>
     </div>
