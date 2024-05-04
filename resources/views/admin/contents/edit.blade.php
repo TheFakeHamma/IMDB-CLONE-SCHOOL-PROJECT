@@ -1,66 +1,70 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
-        <h1>Edit Content: {{ $content->title }}</h1>
+<div class="container mx-auto px-4">
+    <h1 class="text-2xl font-bold my-6">Edit Content: {{ $content->title }}</h1>
 
-        @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
-
-        <form action="{{ route('admin.content.update', $content->id) }}" method="POST">
-            @csrf
-            @method('PUT')
-            <div class="mb-3">
-                <label for="title" class="form-label">Title</label>
-                <input type="text" class="form-control" id="title" name="title" value="{{ $content->title }}">
-            </div>
-            <div class="mb-3">
-                <label for="synopsis" class="form-label">Synopsis</label>
-                <textarea class="form-control" id="synopsis" name="synopsis">{{ $content->synopsis }}</textarea>
-            </div>
-            <div class="mb-3">
-                <label for="type" class="form-label">Type</label>
-                <select class="form-select" id="type" name="type">
-                    <option value="movie" {{ $content->type == 'movie' ? 'selected' : '' }}>Movie</option>
-                    <option value="tv_show" {{ $content->type == 'tv_show' ? 'selected' : '' }}>TV Show</option>
-                </select>
-            </div>
-            <div class="mb-3">
-                <label for="genres" class="form-label">Genres</label>
-                @foreach ($allGenres as $genre)
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" name="genres[]" id="genre{{ $genre->id }}"
-                            value="{{ $genre->id }}" {{ $content->genres->contains($genre->id) ? 'checked' : '' }}>
-                        <label class="form-check-label" for="genre{{ $genre->id }}">
-                            {{ $genre->name }}
-                        </label>
-                    </div>
+    @if ($errors->any())
+        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+            <strong class="font-bold">Whoops!</strong>
+            <span class="block sm:inline">There were some problems with your input.</span>
+            <ul class="list-disc pl-5 mt-3">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
                 @endforeach
-            </div>
-            <div class="mb-3">
-                <label for="release_date" class="form-label">Release Date</label>
-                <input type="date" class="form-control" id="release_date" name="release_date"
-                    value="{{ $content->release_date->format('Y-m-d') }}">
-            </div>
-            <div class="mb-3">
-                <label for="photo_url" class="form-label">Photo URL</label>
-                <input type="url" class="form-control" id="photo_url" name="photo_url"
-                    value="{{ $content->photo_url }}">
-            </div>
-            <div class="mb-3">
-                <label for="trailer_url" class="form-label">Trailer URL</label>
-                <input type="url" class="form-control" id="trailer_url" name="trailer_url"
-                    value="{{ $content->trailer_url }}">
-            </div>
-            <button type="submit" class="btn btn-primary">Update Content</button>
-            <a href="{{ route('admin.contents.index') }}" class="btn btn-secondary">Cancel</a>
+            </ul>
+        </div>
+    @endif
+
+    <form action="{{ route('admin.content.update', $content->id) }}" method="POST" class="mt-5">
+        @csrf
+        @method('PUT')
+        <div class="mb-4">
+            <label for="title" class="block text-gray-700 text-sm font-bold mb-2">Title</label>
+            <input type="text" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="title" name="title" value="{{ $content->title }}">
+        </div>
+        <div class="mb-4">
+            <label for="synopsis" class="block text-gray-700 text-sm font-bold mb-2">Synopsis</label>
+            <textarea class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="synopsis" name="synopsis">{{ $content->synopsis }}</textarea>
+        </div>
+        <div class="mb-4">
+            <label for="type" class="block text-gray-700 text-sm font-bold mb-2">Type</label>
+            <select class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline" id="type" name="type">
+                <option value="movie" {{ $content->type == 'movie' ? 'selected' : '' }}>Movie</option>
+                <option value="tv_show" {{ $content->type == 'tv_show' ? 'selected' : '' }}>TV Show</option>
+            </select>
+        </div>
+        <div class="mb-4">
+            <label for="genres" class="block text-gray-700 text-sm font-bold mb-2">Genres</label>
+            @foreach ($allGenres as $genre)
+                <div class="flex items-center mb-2">
+                    <input class="h-5 w-5 text-blue-600" type="checkbox" name="genres[]" id="genre{{ $genre->id }}"
+                        value="{{ $genre->id }}" {{ $content->genres->contains($genre->id) ? 'checked' : '' }}>
+                    <label for="genre{{ $genre->id }}" class="ml-2 text-gray-700">
+                        {{ $genre->name }}
+                    </label>
+                </div>
+            @endforeach
+        </div>
+        <div class="mb-4">
+            <label for="release_date" class="block text-gray-700 text-sm font-bold mb-2">Release Date</label>
+            <input type="date" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="release_date" name="release_date"
+                value="{{ $content->release_date->format('Y-m-d') }}">
+        </div>
+        <div class="mb-4">
+            <label for="photo_url" class="block text-gray-700 text-sm font-bold mb-2">Photo URL</label>
+            <input type="url" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="photo_url" name="photo_url"
+                value="{{ $content->photo_url }}">
+        </div>
+        <div class="mb-4">
+            <label for="trailer_url" class="block text-gray-700 text-sm font-bold mb-2">Trailer URL</label>
+            <input type="url" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="trailer_url" name="trailer_url"
+                value="{{ $content->trailer_url }}">
+        </div>
+        <div class="flex items-center justify-between">
+            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Update Content</button>
+            <a href="{{ route('admin.contents.index') }}" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Cancel</a>
         </form>
     </div>
+</div>
 @endsection

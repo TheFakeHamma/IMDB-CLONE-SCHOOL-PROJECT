@@ -1,58 +1,119 @@
-<nav class="bg-white border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-900">
-    <div class="container-fluid max-w-7xl mx-auto flex flex-wrap justify-between items-center">
+<nav class="bg-gray-800 border-b border-gray-700 px-2 sm:px-4 py-2.5">
+    <div class="container mx-auto flex flex-wrap justify-between items-center">
         <!-- Logo -->
-        <a class="flex items-center" href="{{ route('index') }}">
-            <img src="{{ asset('images/logo-small.png') }}" alt="Logo" class="mr-3 h-6 sm:h-9">
+        <a href="{{ route('index') }}" class="flex items-center">
+            <img src="{{ asset('images/logo-small.png') }}" alt="Logo" class="mr-3 h-9">
         </a>
 
         <!-- Mobile menu button -->
-        <button class="inline-flex items-center p-2 ml-3 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+        <button class="navbar-toggler inline-flex items-center p-2 text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-700" type="button" id="mobile-menu-button">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
         </button>
 
         <!-- Navbar content -->
         <div class="hidden w-full md:block md:w-auto" id="navbarSupportedContent">
-            <div class="flex flex-col mt-4 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium">
+            <div class="flex flex-col md:flex-row md:space-x-10 w-full">
                 <!-- Search form -->
-                <form class="flex-grow mr-3" role="search" action="{{ route('search') }}" method="GET">
-                    <div class="input-group relative flex items-stretch w-full">
-                        <input class="form-input rounded-l-md" type="search" placeholder="Search" aria-label="Search" name="search" value="{{ request('search') }}">
-                        <select class="form-select block w-20 rounded-none rounded-r-md" name="searchType">
-                            <option value="content"{{ request('searchType') == 'content' ? ' selected' : '' }}>Content</option>
-                            <option value="people"{{ request('searchType') == 'people' ? ' selected' : '' }}>People</option>
-                        </select>
-                        <button class="btn inline-block px-6 py-2.5 bg-green-500 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-green-700 hover:shadow-lg focus:bg-green-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-800 active:shadow-lg transition duration-150 ease-in-out ml-1" type="submit">Search</button>
-                    </div>
+                <form class="flex-grow flex items-center space-x-2" action="{{ route('search') }}" method="GET">
+                    <input class="form-input flex-grow rounded-l-md" type="search" placeholder="Search" aria-label="Search" name="search" value="{{ request('search') }}">
+                    <select class="form-select rounded-none" name="searchType">
+                        <option value="content"{{ request('searchType') == 'content' ? ' selected' : '' }}>Content</option>
+                        <option value="people"{{ request('searchType') == 'people' ? ' selected' : '' }}>People</option>
+                    </select>
+                    <button class="btn bg-green-500 hover:bg-green-700 text-white px-3 py-2 rounded-r-md transition duration-300" type="submit">Search</button>
                 </form>
                 <!-- Navigation links -->
-                <div class="flex flex-grow justify-end">
-                    <ul class="flex flex-col mt-4 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium">
+                <ul class="flex-grow flex flex-col md:flex-row md:justify-end space-y-4 md:space-y-0 md:space-x-4">
+                    <li>
+                        <a class="text-white hover:bg-gray-700 px-3 py-2 rounded-md" href="{{ route('index') }}">Home</a>
+                    </li>
+                    <li>
+                        <a class="text-white hover:bg-gray-700 px-3 py-2 rounded-md" href="{{ route('people') }}">People</a>
+                    </li>
+                    <li>
+                        <button class="text-white hover:bg-gray-700 px-3 py-2 rounded-md" id="dropdownMoviesButton">Movies & Shows</button>
+                        <!-- Dropdown content -->
+                        <ul class="hidden bg-gray-800" id="moviesDropdown">
+                            <li><a href="{{ route('contents') }}?type=movie">Movies</a></li>
+                            <li><a href="{{ route('contents') }}?type=tv_show">TV Shows</a></li>
+                            <li><a href="{{ route('contents') }}">Show all</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <button class="text-white hover:bg-gray-700 px-3 py-2 rounded-md" id="dropdownGenresButton">Genres</button>
+                        <!-- Dropdown content -->
+                        <ul class="hidden bg-gray-800" id="genresDropdown">
+                            @foreach ($genres as $genre)
+                                <li><a href="{{ route('contents') }}?genre[]={{ $genre->name }}">{{ $genre->name }}</a></li>
+                            @endforeach
+                            <li><a href="{{route('genres')}}">All Genres</a></li>
+                        </ul>
+                    </li>
+                    @if (Auth::check())
                         <li>
-                            <a class="nav-link block py-2 pr-4 pl-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white" href="{{ route('index') }}" aria-current="page">Home</a>
+                            <a class="text-white hover:bg-gray-700 px-3 py-2 rounded-md" href="{{ route('watchlist') }}">My Watchlist</a>
+                        </li>
+                    @endif
+                    <!-- Conditional Admin Panel -->
+                    @can('manage-users')
+                        <li>
+                            <button class="text-white hover:bg-gray-700 px-3 py-2 rounded-md" id="adminDropdownButton">Admin Panel</button>
+                            <ul class="hidden bg-gray-800" id="adminDropdown">
+                                <li><a href="{{ route('admin.users.index') }}">User Settings</a></li>
+                                <li><a href="{{ route('admin.contents.index') }}">Manage Contents</a></li>
+                                <li><a href="{{ route('admin.people.index') }}">Manage People</a></li>
+                                <li><a href="{{ route('admin.genres.index') }}">Manage Genres</a></li>
+                            </ul>
+                        </li>
+                    @endcan
+                    @guest
+                        <li>
+                            <a class="bg-green-500 hover:bg-green-700 text-white py-2 px-4 rounded" href="{{ route('login') }}">{{ __('Login') }}</a>
                         </li>
                         <li>
-                            <a class="nav-link block py-2 pr-4 pl-3 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent" href="{{ route('people') }}">People</a>
+                            <a class="bg-white hover:bg-gray-100 text-green-500 py-2 px-4 rounded border border-green-500" href="{{ route('register') }}">{{ __('Register') }}</a>
                         </li>
-                        <!-- More navigation items -->
-                    </ul>
-                    <ul class="flex flex-col mt-4 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium">
-                        @guest
-                            @if (Route::has('login'))
-                                <li>
-                                    <a class="btn bg-green-500 hover:bg-green-700 text-white py-2 px-4 rounded" href="{{ route('login') }}">{{ __('Login') }}</a>
-                                </li>
-                            @endif
-                            @if (Route::has('register'))
-                                <li>
-                                    <a class="btn border border-green-500 hover:bg-green-500 text-green-500 hover:text-white py-2 px-4 rounded" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                </li>
-                            @endif
-                        @else
-                            <!-- User Profile & Logout -->
-                        @endguest
-                    </ul>
-                </div>
+                    @else
+                        <li>
+                            <a class="bg-white hover:bg-gray-100 text-green-500 py-2 px-4 rounded border border-green-500" href="{{ route('user.profile', Auth::user()->username) }}">{{ __('Profile') }}</a>
+                        </li>
+                        <li>
+                            <a class="bg-red-500 hover:bg-red-700 text-white py-2 px-4 rounded" href="{{ route('logout') }}"
+                               onclick="event.preventDefault();
+                                        document.getElementById('logout-form').submit();">
+                                {{ __('Logout') }}
+                            </a>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">
+                                @csrf
+                            </form>
+                        </li>
+                    @endguest
+                </ul>
             </div>
         </div>
     </div>
 </nav>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // Toggle dropdowns
+      const toggleDropdown = (buttonId, dropdownId) => {
+        const button = document.getElementById(buttonId);
+        const dropdown = document.getElementById(dropdownId);
+        button.addEventListener('click', () => {
+          dropdown.classList.toggle('hidden');
+        });
+      };
+  
+      toggleDropdown('dropdownMoviesButton', 'moviesDropdown');
+      toggleDropdown('dropdownGenresButton', 'genresDropdown');
+      toggleDropdown('adminDropdownButton', 'adminDropdown');
+  
+      // Mobile menu toggle
+      const mobileMenuButton = document.getElementById('mobile-menu-button');
+      const navbarContent = document.getElementById('navbarSupportedContent');
+      mobileMenuButton.addEventListener('click', () => {
+        navbarContent.classList.toggle('hidden');
+      });
+    });
+  </script>
