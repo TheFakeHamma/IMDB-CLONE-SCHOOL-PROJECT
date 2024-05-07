@@ -1,10 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="mx-auto max-w-[100rem] px-4 sm:px-6 lg:px-[1rem]">
         @if (isset($latestMovie))
-            <x-hero-movie :title="$latestMovie->title" :release-date="$latestMovie->release_date" :synopsis="$latestMovie->synopsis" :id="$latestMovie->id">
-                <img class="rounded-lg w-full" src="{{ $latestMovie->photo_url }}" alt="{{ $latestMovie->title }}" width="720"></x-hero-movie>
+            <x-hero-movie :title="$latestMovie->title" :release-date="$latestMovie->release_date" :synopsis="$latestMovie->synopsis" :id="$latestMovie->id" :average-rating="$latestMovie->averageRating">
+                <img class="w-full h-full rounded-sm shadow-lg" src="{{ $latestMovie->photo_url }}" alt="{{ $latestMovie->title }}"></x-hero-movie>
         @else
             <p class="text-center">We are working on our website. New content will be available soon.</p>
         @endif

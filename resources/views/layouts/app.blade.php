@@ -19,7 +19,7 @@
     @vite(['resources/css/app.css'])
 </head>
 
-<body class="flex flex-col h-screen bg-[#03001D]">
+<body class="flex flex-col h-screen bg-[#03001D] center">
     <div id="app" class="flex flex-col flex-grow">
         <x-nav-bar />
 

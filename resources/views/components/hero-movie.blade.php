@@ -1,15 +1,20 @@
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 my-5">
-    <div class="flex flex-wrap bg-white p-4 md:pt-5 rounded-lg shadow-lg">
-        <div class="w-full lg:w-1/3 overflow-hidden shadow-lg">
-            <div>{{ $slot }}</div>
+<div class="bg-[#252525] h-30 rounded-sm shadow-lg flex items-center justify-between mx-auto my-5">
+    <div class="w-2/5">
+        <div>{{ $slot }}</div>
+    </div>
+    <div class="w-2/3 p-3 md:pl-5 text-white mx-20">
+        <div class="flex">
+        <h2 class="text-2xl font-bold">{{ $title }}</h2>
+        <div class="flex items-center mt-2 ml-5">
+            @for ($i = 0; $i < 5; $i++)
+                <svg class="{{ $i < round($averageRating) ? 'text-yellow-400' : 'text-gray-500' }} w-4 h-4 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                    <path d="M10 15l-5.5 3 1.5-6.6L0 7.6l6.4-1L10 0l3.6 6.6 6.4 1-4.6 4.4 1.5 6.6z"/>
+                </svg>
+            @endfor
+            <span class="ml-2 text-sm text-gray-400">{{ $averageRating }} / 5</span>
         </div>
-        <div class="w-full lg:w-2/3 p-3 lg:pl-5 lg:pt-3">
-            <h2 class="font-bold text-4xl">{{ $title }}</h2>
-            <p class="text-lg mt-2">{{ $synopsis }}</p>
-            <footer class="mt-2 text-gray-600">Release date {{ $releaseDate->format('Y') }}</footer>
-            <div class="mt-4 flex space-x-2">
-                <a class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" href="{{ route('content.show', ['id' => $id]) }}" role="button">Go to movie</a>
-            </div>
-        </div>
+    </div>
+        <p class="mt-4">{{ $synopsis }}</p>
+        <a href="{{ route('content.show', ['id' => $id]) }}" class="text-[#FFFFFF] font-bold hover:text-[#FF3131] mt-10 inline-block">Read More...</a>
     </div>
 </div>
