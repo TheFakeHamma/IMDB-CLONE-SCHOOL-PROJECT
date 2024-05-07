@@ -1,7 +1,7 @@
 <nav class="bg-[#03001D]">
     <div class="mx-auto flex items-center justify-between px-4 py-2">
         <a href="{{ route('index') }}" class="flex items-center space-x-3">
-            <img src="{{ asset('images/logo-small.png') }}" alt="Flowbite Logo" />
+            <img src="{{ asset('images/logo-small.png') }}" alt="filmsphere logo" />
         </a>
         <!-- Search Form -->
         <form class="flex-grow mx-5 flex items-center" action="{{ route('search') }}" method="GET">
