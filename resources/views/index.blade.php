@@ -9,7 +9,7 @@
             <p class="text-center">We are working on our website. New content will be available soon.</p>
         @endif
         <div class="mt-5 mb-5">
-            <h1 class="text-3xl font-bold">Top 5 Movies</h1>
+            <h1 class="text-3xl text-[#FFFFFF] font-bold mt-20 mb-10">Top 5 Movies</h1>
             @if ($topMovies->isNotEmpty())
                 <div class="grid grid-cols-5 gap-4">
                     @foreach ($topMovies as $movie)
