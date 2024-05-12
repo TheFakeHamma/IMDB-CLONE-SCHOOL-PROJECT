@@ -7,7 +7,7 @@
         <form class="flex-grow mx-5 flex items-center" action="{{ route('search') }}" method="GET">
             <div class="flex w-1/2">
                 <input type="search" placeholder="Search..." name="search" value="{{ request('search') }}"
-                    class="w-full px-3 h-10 rounded-l bg-white border border-gray-600 text-white focus:outline-none focus:border-blue-500">
+                    class="w-full px-3 h-10 rounded-l bg-white border border-gray-600 text-black focus:outline-none focus:border-blue-500">
                 <button type="submit" class="bg-[#FF3131] text-white rounded-r px-3 py-1">Search</button>
             </div>
             <select name="searchType"
