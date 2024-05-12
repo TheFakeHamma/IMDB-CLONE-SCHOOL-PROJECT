@@ -22,7 +22,7 @@
                 <a href="{{ route('index') }}" class="text-white hover:text-red-500">Home</a>
             </li>
             <li>
-                <a href="#" class="text-white hover:text-red-500">People</a>
+                <a href="{{route('people')}}" class="text-white hover:text-red-500">People</a>
             </li>
             <li>
                 <button id="contentDropdownLink" data-dropdown-toggle="contentDropdown"
@@ -66,7 +66,7 @@
                 <div id="genresDropdown"
                     class="hidden absolute bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600 z-50">
                     <ul class="py-2 text-sm text-gray-700 dark:text-gray-400">
-                        @foreach ($genres as $genre)
+                        @foreach ($topGenres as $genre)
                             <li>
                                 <a href="{{ route('contents') }}?genre[]={{ $genre->name }}"
                                     class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">{{ $genre->name }}</a>
