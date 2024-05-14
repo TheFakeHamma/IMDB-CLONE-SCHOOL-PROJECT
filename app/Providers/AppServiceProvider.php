@@ -27,8 +27,13 @@ class AppServiceProvider extends ServiceProvider
         }
 
         View::composer('components.nav-bar', function ($view) {
-            $genres = Genre::limit(3)->get();
-            $view->with('genres', $genres);
+            $topGenres = Genre::withCount(['contents' => function($query) {
+                $query->where('type', 'movie');
+            }])->orderBy('contents_count', 'desc')
+                ->take(3)
+                ->get();
+    
+            $view->with('topGenres', $topGenres);
         });
 
         View::composer('components.footer', function ($view) {

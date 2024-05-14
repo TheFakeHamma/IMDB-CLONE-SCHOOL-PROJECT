@@ -1,82 +1,78 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
-        <h1>Genres Management</h1>
-        <!-- Button to trigger modal -->
-        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#createGenreModal">
-            Add New Genre
-        </button>
+<div class="container mx-auto px-4">
+    <h1 class="text-2xl font-bold text-white my-6">Genres Management</h1>
+    <!-- Button to trigger modal -->
+    <button onclick="openModal('createGenreModal')" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mb-4">
+        Add New Genre
+    </button>
 
-        <!-- Create Genre Modal -->
-        <div class="modal fade" id="createGenreModal" tabindex="-1" aria-labelledby="createGenreModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="createGenreModalLabel">Add New Genre</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <!-- Display Validation Errors -->
-                        @if ($errors->any())
-                            <div>
-                                <ul>
-                                    @foreach ($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        @endif
+    <!-- Create Genre Modal -->
+    <div class="modal fixed inset-0 flex items-center justify-center z-50 hidden" id="createGenreModal">
+        <div class="relative w-full max-w-lg pointer-events-auto">
+            <div class="border-none shadow-lg relative flex flex-col w-full bg-white bg-clip-padding rounded-md outline-none text-current">
+                <div class="flex items-center justify-between p-4 border-b border-gray-200 rounded-t-md">
+                    <h5 class="text-xl font-medium text-gray-800">Add New Genre</h5>
+                    <button onclick="closeModal('createGenreModal')" class="text-gray-400 hover:text-gray-500" aria-label="Close">✖️</button>
+                </div>
+                <div class="relative p-4">
+                    <!-- Display Validation Errors -->
+                    @if ($errors->any())
+                        <div class="text-red-500">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
 
-                        <form action="{{ route('admin.genre.create') }}" method="POST">
-                            @csrf
-                            <div class="mb-3">
-                                <label for="name" class="form-label">Name</label>
-                                <input type="text" class="form-control" id="name" name="name" required>
-                            </div>
-                            <button type="submit" class="btn btn-primary">Create Genre</button>
-                        </form>
-                    </div>
+                    <form action="{{ route('admin.genre.create') }}" method="POST">
+                        @csrf
+                        <div class="mb-3">
+                            <label for="name" class="block text-gray-700 font-bold mb-2">Name</label>
+                            <input type="text" id="name" name="name" required
+                                class="block w-full px-3 py-2 text-gray-700 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        </div>
+                        <button type="submit" class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Create Genre</button>
+                    </form>
                 </div>
             </div>
         </div>
-        <table class="table">
-            <thead>
+    </div>
+
+    <div class="overflow-x-auto relative shadow-md sm:rounded-lg">
+        <table class="w-full text-sm text-left text-gray-400">
+            <thead class="text-xs uppercase bg-gray-700 text-gray-400">
                 <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Actions</th>
+                    <th scope="col" class="py-3 px-6">#</th>
+                    <th scope="col" class="py-3 px-6">Name</th>
+                    <th scope="col" class="py-3 px-6">Actions</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($genres as $genre)
-                    <tr>
-                        <th scope="row">{{ $genre->id }}</th>
-                        <td>{{ $genre->name }}</td>
-                        <td>
+                    <tr class="border-b bg-gray-800 border-gray-700">
+                        <th scope="row" class="py-4 px-6 font-medium text-white">{{ $genre->id }}</th>
+                        <td class="py-4 px-6">{{ $genre->name }}</td>
+                        <td class="py-4 px-6 flex space-x-2">
                             <!-- Trigger modal button for Edit -->
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                data-bs-target="#editGenreModal{{ $genre->id }}">
+                            <button onclick="openModal('editGenreModal{{ $genre->id }}')" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                                 Edit
                             </button>
                             <!-- Edit Genre Modal -->
-                            <div class="modal fade" id="editGenreModal{{ $genre->id }}" tabindex="-1"
-                                aria-labelledby="editGenreModalLabel{{ $genre->id }}" aria-hidden="true">
-
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="editGenreModalLabel{{ $genre->id }}">Edit
-                                                Genre:
-                                                {{ $genre->name }}</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close"></button>
+                            <div class="modal fixed inset-0 flex items-center justify-center z-50 hidden" id="editGenreModal{{ $genre->id }}">
+                                <div class="relative w-full max-w-lg pointer-events-auto">
+                                    <div class="border-none shadow-lg relative flex flex-col w-full bg-white bg-clip-padding rounded-md outline-none text-current">
+                                        <div class="flex items-center justify-between p-4 border-b border-gray-200 rounded-t-md">
+                                            <h5 class="text-xl font-medium text-gray-800">Edit Genre: {{ $genre->name }}</h5>
+                                            <button onclick="closeModal('editGenreModal{{ $genre->id }}')" class="text-gray-400 hover:text-gray-500" aria-label="Close">✖️</button>
                                         </div>
-                                        <div class="modal-body">
+                                        <div class="relative p-4">
                                             <!-- Display Validation Errors -->
                                             @if ($errors->any())
-                                                <div>
+                                                <div class="text-red-500">
                                                     <ul>
                                                         @foreach ($errors->all() as $error)
                                                             <li>{{ $error }}</li>
@@ -84,22 +80,20 @@
                                                     </ul>
                                                 </div>
                                             @endif
-                                            <form action="{{ route('admin.genre.update', $genre->id) }}" method="POST">
+                                            <form action="{{ route('admin.genre.update', $genre->id) }}" method="POST" class="space-y-4">
                                                 @csrf
                                                 @method('PUT')
-
                                                 <div class="mb-3">
-                                                    <label for="name{{ $genre->id }}" class="form-label">Name</label>
-                                                    <input type="text" class="form-control" id="name{{ $genre->id }}"
-                                                        name="name" value="{{ $genre->name }}" required>
+                                                    <label for="name{{ $genre->id }}" class="block text-gray-700 font-bold mb-2">Name</label>
+                                                    <input type="text" id="name{{ $genre->id }}" name="name" value="{{ $genre->name }}" required
+                                                        class="block w-full px-3 py-2 text-gray-700 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
                                                 </div>
-
-                                                <button type="submit" class="btn btn-primary">Update Genre</button>
+                                                <button type="submit" class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Update Genre</button>
                                             </form>
-                                            <form class="mt-2" action="{{ route('admin.genre.destroy', $genre->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this genre?');">
+                                            <form action="{{ route('admin.genre.destroy', $genre->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this genre?');" class="mt-2">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="btn btn-danger">Delete</button>
+                                                <button type="submit" class="w-full bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete</button>
                                             </form>
                                         </div>
                                     </div>
@@ -111,4 +105,31 @@
             </tbody>
         </table>
     </div>
+</div>
+
+<script>
+function openModal(modalId) {
+    document.getElementById(modalId).style.display = 'flex';
+}
+
+function closeModal(modalId) {
+    document.getElementById(modalId).style.display = 'none';
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.modal-content').forEach(function(modalContent) {
+        modalContent.addEventListener('click', function(event) {
+            event.stopPropagation();
+        });
+    });
+
+    document.querySelectorAll('.modal').forEach(function(modal) {
+        modal.addEventListener('click', function(event) {
+            if (event.target.classList.contains('modal')) {
+                closeModal(modal.id);
+            }
+        });
+    });
+});
+</script>
 @endsection

@@ -1,28 +1,20 @@
-<div class="container my-5">
-    <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg" style="height: auto;">
-        <div class="col-lg-4 offset-lg-1 p-0 overflow-hidden shadow-lg">
-            <div class="lc-block">{{ $slot }}</div>
+<div class="bg-[#252525] h-30 rounded-sm shadow-lg flex items-center justify-between mx-auto my-5">
+    <div class="w-2/5">
+        <div>{{ $slot }}</div>
+    </div>
+    <div class="w-2/3 p-3 md:pl-5 text-white mx-20">
+        <div class="flex">
+        <h2 class="text-2xl font-bold">{{ $title }}</h2>
+        <div class="flex items-center mt-2 ml-5">
+            @for ($i = 0; $i < 5; $i++)
+                <svg class="{{ $i < round($averageRating) ? 'text-yellow-400' : 'text-gray-500' }} w-4 h-4 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                    <path d="M10 15l-5.5 3 1.5-6.6L0 7.6l6.4-1L10 0l3.6 6.6 6.4 1-4.6 4.4 1.5 6.6z"/>
+                </svg>
+            @endfor
+            <span class="ml-2 text-sm text-gray-400">{{ $averageRating }} / 5</span>
         </div>
-        <div class="col-lg-7 p-3 p-lg-5 pt-lg-3">
-            <div class="lc-block mb-3">
-                <div editable="rich">
-                    <h2 class="fw-bold display-4">{{ $title }}<p></p>
-                        <p></p>
-                    </h2>
-                </div>
-            </div>
-
-            <div class="lc-block mb-3">
-                <div editable="rich">
-                    <p class="lead">{{ $synopsis }}</p>
-                    <footer class="blockquote-footer mt-2">Release date {{ $releaseDate->format('Y') }}</footer>
-                </div>
-            </div>
-
-            <div class="lc-block d-grid gap-2 d-md-flex justify-content-md-start"><a class="btn btn-danger px-4 me-md-2"
-                    href="{{ route('content.show', ['id' => $id]) }}" role="button">Go to movie</a>
-            </div>
-        </div>
-
+    </div>
+        <p class="mt-4">{{ $synopsis }}</p>
+        <a href="{{ route('content.show', ['id' => $id]) }}" class="text-[#FFFFFF] font-bold hover:text-[#FF3131] mt-10 inline-block">Read More...</a>
     </div>
 </div>

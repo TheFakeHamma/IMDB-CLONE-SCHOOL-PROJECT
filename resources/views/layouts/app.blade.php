@@ -16,18 +16,20 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
 
     <!-- Scripts -->
-    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    @vite(['resources/css/app.css'])
 </head>
 
-<body>
-    <div id="app">
+<body class="flex flex-col h-screen bg-[#03001D] center">
+    <div id="app" class="flex flex-col flex-grow">
         <x-nav-bar />
 
-        <main class="py-4">
+        <main class="py-4 flex-grow">
             @yield('content')
         </main>
+
+        <x-footer />
     </div>
-    <x-footer />
 </body>
+
 
 </html>

@@ -1,138 +1,158 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
-        <h1>People Management</h1>
-        <!-- Button to trigger modal -->
-        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#createPersonModal">
-            Add New Person
-        </button>
+<div class="container mx-auto px-4">
+    <h1 class="text-2xl font-bold text-white my-6">People Management</h1>
+    <!-- Button to trigger modal -->
+    <button onclick="openModal('createPersonModal')" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mb-4">
+        Add New Person
+    </button>
 
-        <!-- Create Person Modal -->
-        <div class="modal fade" id="createPersonModal" tabindex="-1" aria-labelledby="createPersonModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="createPersonModalLabel">Add New Person</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <!-- Display Validation Errors -->
-                        @if ($errors->any())
-                            <div>
-                                <ul>
-                                    @foreach ($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        @endif
+    <!-- Create Person Modal -->
+    <div class="modal fixed inset-0 flex items-center justify-center z-50 hidden" id="createPersonModal">
+        <div class="relative w-full max-w-lg pointer-events-auto">
+            <div class="border-none shadow-lg relative flex flex-col w-full bg-white bg-clip-padding rounded-md outline-none text-current">
+                <div class="flex items-center justify-between p-4 border-b border-gray-200 rounded-t-md">
+                    <h5 class="text-xl font-medium text-gray-800">Add New Person</h5>
+                    <button onclick="closeModal('createPersonModal')" class="text-gray-400 hover:text-gray-500" aria-label="Close">✖️</button>
+                </div>
+                <div class="relative p-4">
+                    <!-- Display Validation Errors -->
+                    @if ($errors->any())
+                        <div class="text-red-500">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
 
-                        <form action="{{ route('admin.person.create') }}" method="POST">
-                            @csrf
-                            <div class="mb-3">
-                                <label for="name" class="form-label">Name</label>
-                                <input type="text" class="form-control" id="name" name="name" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="bio" class="form-label">Bio</label>
-                                <textarea class="form-control" id="bio" name="bio"></textarea>
-                            </div>
-                            <div class="mb-3">
-                                <label for="photo_url" class="form-label">Photo URL</label>
-                                <input type="url" class="form-control" id="photo_url" name="photo_url">
-                            </div>
-                            <button type="submit" class="btn btn-primary">Create Person</button>
-                        </form>
-                    </div>
+                    <form action="{{ route('admin.person.create') }}" method="POST">
+                        @csrf
+                        <div class="mb-3">
+                            <label for="name" class="block text-gray-700 font-bold mb-2">Name</label>
+                            <input type="text" id="name" name="name" required
+                                class="block w-full px-3 py-2 text-gray-700 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        </div>
+                        <div class="mb-3">
+                            <label for="bio" class="block text-gray-700 font-bold mb-2">Bio</label>
+                            <textarea id="bio" name="bio"
+                                class="block w-full px-3 py-2 text-gray-700 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="photo_url" class="block text-gray-700 font-bold mb-2">Photo URL</label>
+                            <input type="url" id="photo_url" name="photo_url"
+                                class="block w-full px-3 py-2 text-gray-700 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        </div>
+                        <button type="submit" class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Create Person</button>
+                    </form>
                 </div>
             </div>
         </div>
-        <table class="table">
-            <thead>
+    </div>
+
+    <div class="overflow-x-auto relative shadow-md sm:rounded-lg">
+        <table class="w-full text-sm text-left text-gray-400">
+            <thead class="text-xs uppercase bg-gray-700 text-gray-400">
                 <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Bio</th>
-                    <th scope="col">Actions</th>
+                    <th scope="col" class="py-3 px-6">#</th>
+                    <th scope="col" class="py-3 px-6">Name</th>
+                    <th scope="col" class="py-3 px-6">Bio</th>
+                    <th scope="col" class="py-3 px-6">Actions</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($people as $person)
-                    <tr>
-                        <th scope="row">{{ $person->id }}</th>
-                        <td>{{ $person->name }}</td>
-                        <td>{{ \Illuminate\Support\Str::limit($person->bio, 100) }}</td>
-                        <td>
-                            <!-- Trigger modal button for Edit -->
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                data-bs-target="#editPersonModal{{ $person->id }}">
-                                Edit
-                            </button>
-                            <!-- Edit User Modal -->
-                            <div class="modal fade" id="editPersonModal{{ $person->id }}" tabindex="-1"
-                                aria-labelledby="editPersonModalLabel{{ $person->id }}" aria-hidden="true">
-
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="editPersonModalLabel{{ $person->id }}">Edit
-                                                Person:
-                                                {{ $person->name }}</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <!-- Display Validation Errors -->
-                                            @if ($errors->any())
-                                                <div>
-                                                    <ul>
-                                                        @foreach ($errors->all() as $error)
-                                                            <li>{{ $error }}</li>
-                                                        @endforeach
-                                                    </ul>
-                                                </div>
-                                            @endif
-                                            <form action="{{ route('admin.person.update', $person->id) }}" method="POST">
-                                                @csrf
-                                                @method('PUT')
-
-                                                <div class="mb-3">
-                                                    <label for="name{{ $person->id }}" class="form-label">Name</label>
-                                                    <input type="text" class="form-control" id="name{{ $person->id }}"
-                                                        name="name" value="{{ $person->name }}" required>
-                                                </div>
-
-                                                <div class="mb-3">
-                                                    <label for="bio{{ $person->id }}" class="form-label">Bio</label>
-                                                    <input type="text" class="form-control" id="bio{{ $person->id }}"
-                                                        name="bio" value="{{ $person->bio }}" required>
-                                                </div>
-
-                                                <div class="mb-3">
-                                                    <label for="photo_url{{ $person->id }}" class="form-label">Photo
-                                                        URL</label>
-                                                    <input type="url" class="form-control"
-                                                        id="photo_url{{ $person->id }}" name="photo_url"
-                                                        value="{{ $person->photo_url }}" required>
-                                                </div>
-
-                                                <button type="submit" class="btn btn-primary">Update Person</button>
-                                            </form>
-                                            <form action="{{ route('admin.person.destroy', $person->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this person?');">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-danger">Delete</button>
-                                            </form>
-                                        </div>
+                <tr class="border-b bg-gray-800 border-gray-700">
+                    <th scope="row" class="py-4 px-6 font-medium text-white">{{ $person->id }}</th>
+                    <td class="py-4 px-6">{{ $person->name }}</td>
+                    <td class="py-4 px-6">{{ \Illuminate\Support\Str::limit($person->bio, 100) }}</td>
+                    <td class="py-4 px-6 flex space-x-2">
+                        <!-- Trigger modal button for Edit -->
+                        <button onclick="openModal('editPersonModal{{ $person->id }}')" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                            Edit
+                        </button>
+                        <!-- Edit Person Modal -->
+                        <div class="modal fixed inset-0 flex items-center justify-center z-50 hidden" id="editPersonModal{{ $person->id }}">
+                            <div class="relative w-full max-w-lg pointer-events-auto">
+                                <div class="border-none shadow-lg relative flex flex-col w-full bg-white bg-clip-padding rounded-md outline-none text-current">
+                                    <div class="flex items-center justify-between p-4 border-b border-gray-200 rounded-t-md">
+                                        <h5 class="text-xl font-medium text-gray-800">Edit Person: {{ $person->name }}</h5>
+                                        <button onclick="closeModal('editPersonModal{{ $person->id }}')" class="text-gray-400 hover:text-gray-500" aria-label="Close">✖️</button>
+                                    </div>
+                                    <div class="relative p-4">
+                                        <!-- Display Validation Errors -->
+                                        @if ($errors->any())
+                                            <div class="text-red-500">
+                                                <ul>
+                                                    @foreach ($errors->all() as $error)
+                                                        <li>{{ $error }}</li>
+                                                    @endforeach
+                                                </ul>
+                                            </div>
+                                        @endif
+                                        <form action="{{ route('admin.person.update', $person->id) }}" method="POST" class="space-y-4">
+                                            @csrf
+                                            @method('PUT')
+                                            <div class="mb-3">
+                                                <label for="name{{ $person->id }}" class="block text-gray-700 font-bold mb-2">Name</label>
+                                                <input type="text" id="name{{ $person->id }}" name="name" value="{{ $person->name }}" required
+                                                    class="block w-full px-3 py-2 text-gray-700 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="bio{{ $person->id }}" class="block text-gray-700 font-bold mb-2">Bio</label>
+                                                <textarea id="bio{{ $person->id }}" name="bio"
+                                                    class="block w-full px-3 py-2 text-gray-700 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">{{ $person->bio }}</textarea>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="photo_url{{ $person->id }}" class="block text-gray-700 font-bold mb-2">Photo URL</label>
+                                                <input type="url" id="photo_url{{ $person->id }}" name="photo_url" value="{{ $person->photo_url }}" required
+                                                    class="block w-full px-3 py-2 text-gray-700 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                            </div>
+                                            <button type="submit" class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Update Person</button>
+                                        </form>
+                                        <form action="{{ route('admin.person.destroy', $person->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this person?');" class="mt-2">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="w-full bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete</button>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
-                        </td>
-                    </tr>
+                        </div>
+                    </td>
+                </tr>
                 @endforeach
             </tbody>
         </table>
     </div>
+</div>
+
+<script>
+function openModal(modalId) {
+    document.getElementById(modalId).style.display = 'flex';
+}
+
+function closeModal(modalId) {
+    document.getElementById(modalId).style.display = 'none';
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.modal-content').forEach(function(modalContent) {
+        modalContent.addEventListener('click', function(event) {
+            event.stopPropagation();
+        });
+    });
+
+    document.querySelectorAll('.modal').forEach(function(modal) {
+        modal.addEventListener('click', function(event) {
+            if (event.target.classList.contains('modal')) {
+                closeModal(modal.id);
+            }
+        });
+    });
+});
+</script>
+
 @endsection
