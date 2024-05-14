@@ -12,7 +12,50 @@
             </button>
 
             <!-- Settings Modal -->
-            <x-settings-modal :user="$user" />
+            <div id="exampleModal" class="modal fixed inset-0 flex items-center justify-center z-50 hidden">
+                <div class="modal-dialog relative w-full max-w-lg pointer-events-auto">
+                    <div class="modal-content border-none shadow-lg relative flex flex-col w-full bg-white bg-clip-padding rounded-md outline-none text-current">
+                        <div class="flex items-center justify-between p-4 border-b border-gray-200 rounded-t-md">
+                            <h5 class="text-xl font-medium text-gray-800">User Settings</h5>
+                            <button class="close-button text-gray-400 hover:text-gray-500" aria-label="Close">✖️</button>
+                        </div>
+                        <div class="relative p-4">
+                            <!-- Display Validation Errors -->
+                            @if ($errors->any())
+                                <div class="text-red-500">
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
+
+                            <!-- Update Password Form -->
+                            <form action="{{ route('user.password.update', $user->username) }}" method="POST" class="space-y-4">
+                                @csrf
+                                @method('PUT')
+                                <div class="mb-3">
+                                    <label for="current_password" class="block text-gray-700 font-bold mb-2">Current Password</label>
+                                    <input type="password" id="current_password" name="current_password" required
+                                        class="block w-full px-3 py-2 text-gray-700 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="new_password" class="block text-gray-700 font-bold mb-2">New Password</label>
+                                    <input type="password" id="new_password" name="new_password" required
+                                        class="block w-full px-3 py-2 text-gray-700 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="new_password_confirmation" class="block text-gray-700 font-bold mb-2">Confirm New Password</label>
+                                    <input type="password" id="new_password_confirmation" name="new_password_confirmation" required
+                                        class="block w-full px-3 py-2 text-gray-700 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                </div>
+                                <button type="submit" class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Update Password</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
         @endif
 
         <h3 class="text-2xl font-semibold text-white mt-6">User Reviews</h3>
@@ -56,18 +99,18 @@
         document.addEventListener('DOMContentLoaded', function () {
             const modal = document.getElementById('exampleModal');
             const openModalBtn = document.getElementById('openModalBtn');
-            const closeModalBtns = document.querySelectorAll('.close-button'); // This selects all close buttons if there are multiple.
-    
+            const closeModalBtns = document.querySelectorAll('.close-button');
+
             openModalBtn.addEventListener('click', function () {
                 modal.classList.remove('hidden'); // Show modal
             });
-    
+
             closeModalBtns.forEach(btn => {
                 btn.addEventListener('click', function () {
                     modal.classList.add('hidden'); // Hide modal
                 });
             });
-    
+
             // Optionally, close the modal by clicking outside of it
             window.addEventListener('click', function (event) {
                 if (event.target == modal) {
@@ -76,5 +119,4 @@
             });
         });
     </script>
-    
 @endsection
