@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 class="text-2xl font-bold text-gray-900 mt-6 mb-4">Genres</h1>
+        <h1 class="text-4xl font-bold text-white mt-6 mb-4">Genres</h1>
         <div class="flex flex-wrap -mx-2">
             @foreach ($genres as $genre)
                 <div class="w-full md:w-1/3 px-2 mb-3">

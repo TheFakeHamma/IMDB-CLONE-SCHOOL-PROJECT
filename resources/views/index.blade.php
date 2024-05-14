@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="mx-auto max-w-[100rem] px-4 sm:px-6 lg:px-[1rem]">
+    <div class="mx-auto max-w-[80rem] px-4 sm:px-6 lg:px-[1rem]">
         @if (isset($latestMovie))
             <x-hero-movie :title="$latestMovie->title" :release-date="$latestMovie->release_date" :synopsis="$latestMovie->synopsis" :id="$latestMovie->id" :average-rating="$latestMovie->averageRating">
                 <img class="w-full h-full rounded-sm shadow-lg" src="{{ $latestMovie->photo_url }}"
