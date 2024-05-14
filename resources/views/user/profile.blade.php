@@ -2,12 +2,12 @@
 
 @section('content')
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 class="text-2xl font-bold">{{ $user->username }}'s Profile</h1>
-        <p>Email: {{ $user->email }}</p>
+        <h1 class="text-4xl font-bold text-white">{{ $user->username }}'s Profile</h1>
+        <p class="text-white mt-2">Email: {{ $user->email }}</p>
 
         <!-- Button trigger modal -->
         @if (Auth::check() && Auth::user()->id == $user->id)
-            <button id="openModalBtn" type="button" class="bg-yellow-400 hover:bg-yellow-500 text-white font-bold py-2 px-4 rounded">
+            <button id="openModalBtn" type="button" class="bg-yellow-400 hover:bg-yellow-500 text-white font-bold mt-5 py-2 px-4 rounded">
                 User Settings
             </button>
 
@@ -15,7 +15,7 @@
             <x-settings-modal :user="$user" />
         @endif
 
-        <h3 class="text-xl font-semibold mt-6">User Reviews</h3>
+        <h3 class="text-2xl font-semibold text-white mt-6">User Reviews</h3>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-3">
             @forelse ($user->reviews as $review)
                 <div class="mb-4">
